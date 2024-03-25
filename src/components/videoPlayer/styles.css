@@ -1,0 +1,10 @@
+.cpnVideoPlayer {
+  display: flex;
+}
+.cpnVideoPlayer > .cpnLabel {
+  flex: 3;
+  margin-right: var(--global-padding);
+}
+.cpnVideoPlayer .box {
+  flex: 8;
+}

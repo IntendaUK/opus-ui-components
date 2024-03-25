@@ -1,0 +1,12 @@
+.cpnCode {
+  padding: 12px;
+  width: 100%;
+  margin: 0px;
+  font-family: monospace;
+  color: black;
+  tab-size: 32px;
+  overflow: auto;
+}
+.cpnCode * {
+  font-family: monospace;
+}

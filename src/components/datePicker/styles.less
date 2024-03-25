@@ -1,0 +1,141 @@
+.cpnDatePicker {
+	.value {
+		width: 100%;
+		cursor: pointer;
+
+		.cpnInput .box .input {
+			color: var(--datePicker-valueColor);
+		}
+
+		&:hover {
+			background-color: rgba(var(--datePicker-backgroundColorHover), var(--datePicker-backgroundOpacityHover));
+
+			.cpnInput .box .input {
+				color: var(--datePicker-valueColorHover);
+			}
+
+		}
+
+		&.active {
+			background-color: var(--datePicker-backgroundColorActive);
+
+			.cpnInput .box .input {
+				color: var(--datePicker-valueColorActive);
+			}
+
+		}
+
+	}
+
+}
+
+.cpnDatePicker-popup {
+	.calendar {
+		margin-top: var(--global-padding);
+		background-color: var(--datePicker-popupBackgroundColor);
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+		padding: var(--global-smallPadding);
+		display: flex;
+		flex-direction: column;
+
+		.topBar {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			.monthDropdown {
+				flex: 1;
+				color: var(--datePicker-popupMonthYearColor);
+				font-weight: bold;
+			}
+
+			.monthNavigation {
+				display: flex;
+				flex-direction: row;
+
+				.button {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: calc(var(--global-bigPadding) - var(--global-smallPadding));
+					height: calc(var(--global-bigPadding) - var(--global-smallPadding));
+					cursor: pointer;
+					color: var(--datePicker-popupMonthButtonColor);
+					background-color: var(--datePicker-popupMonthButtonBackgroundColor);
+					font-weight: bold;
+
+					&:hover {
+						background-color: rgba(var(--datePicker-popupMonthButtonBackgroundColorHover), var(--datePicker-popupMonthButtonBackgroundColorOpacityHover));
+						color: var(--datePicker-popupMonthButtonColorHover);
+					}
+
+				}
+
+			}
+
+		}
+
+		.daysBar {
+			display: flex;
+			flex-direction: row;
+			margin-top: 18px;
+
+			.day {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: calc(var(--global-bigPadding) - var(--global-smallPadding));
+				height: calc(var(--global-bigPadding) - var(--global-smallPadding));
+				color: var(--datePicker-popupDayHeadingColor);
+				font-weight: bold;
+			}
+
+		}
+
+		.datesBox {
+			display: flex;
+			flex-direction: column;
+
+			.row {
+				display: flex;
+				flex-direction: row;
+
+				.date {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: calc(var(--global-bigPadding) - var(--global-smallPadding));
+					height: calc(var(--global-bigPadding) - var(--global-smallPadding));
+
+					&:not(.empty) {
+						background-color: var(--datePicker-popupDateBackgroundColor);
+						border-radius: 50%;
+						cursor: pointer;
+						color: var(--datePicker-popupDateColor);
+
+						&.selected {
+							color: var(--datePicker-popupDateColorSelected);
+							background-color: var(--datePicker-popupDateBackgroundColorSelected);
+						}
+
+						&:hover {
+							color: var(--datePicker-popupDateColorHover);
+							background-color: rgba(var(--datePicker-popupDateBackgroundColorHover), var(--datePicker-popupDateBackgroundColorOpacityHover));
+						}
+
+					}
+
+					&.today {
+						color: var(--datePicker-popupTodayColor);
+						background-color: var(--datePicker-popupTodayBackgroundColor);
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}

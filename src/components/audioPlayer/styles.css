@@ -1,0 +1,13 @@
+.cpnAudioPlayer {
+  display: flex;
+}
+.cpnAudioPlayer > .cpnLabel {
+  flex: 3;
+  margin-right: var(--global-padding);
+}
+.cpnAudioPlayer .box {
+  flex: 8;
+}
+.cpnAudioPlayer .box > audio:focus {
+  outline: none;
+}

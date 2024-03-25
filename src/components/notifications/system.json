@@ -1,0 +1,12 @@
+{
+    "propSpecConfig": {
+        "path": "src/components/notifications/props.js",
+        "functions": [
+            {
+                "key": "mapToColor",
+                "path": "src/props/cssMaps/mapToColor.js"
+            }
+        ],
+        "dependents": []
+    }
+}

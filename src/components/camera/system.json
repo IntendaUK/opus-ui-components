@@ -1,0 +1,13 @@
+{
+    "propSpecConfig": {
+        "path": "src/components/camera/props.js",
+        "functions": [],
+        "dependents": [
+            {
+                "path": "src/components/camera/internalProps.js",
+                "functions": [],
+                "dependents": []
+            }
+        ]
+    }
+}

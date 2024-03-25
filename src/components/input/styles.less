@@ -1,0 +1,171 @@
+.cpnInput {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+
+	> .cpnLabel {
+		font-size: var(--global-fontSize);
+		margin-right: var(--global-padding);
+		align-items: center;
+	}
+
+	> .cpnIcon {
+		margin-right: var(--global-padding);
+		align-items: center;
+	}
+
+	.box {
+		position: relative;
+		flex: 1;
+		font-size: inherit;
+
+		> .input {
+			height: var(--input-height);
+			width: 100%;
+			color: var(--input-text-color);
+			background-color: unset;
+			padding: 0;
+			border: none;
+			outline: none;
+			font-size: var(--input-fontSize);
+			font-family: var(--input-fontFamily);
+			text-align: var(--input-textAlign);
+
+			&::placeholder {
+				color: var(--input-placeholder-text-color);
+			}
+
+			&.masked {
+				letter-spacing: 4px;
+			}
+
+		}
+
+		> .cpnIcon {
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: var(--input-height);
+			cursor: pointer;
+			align-items: center;
+		}
+
+		> .help {
+			opacity: 0.5;
+			font-style: italic;
+			margin-top: 3px;
+		}
+
+	}
+
+	&.autoPad {
+		> .cpnLabel {
+			height: var(--input-height);
+			line-height: var(--input-height);
+		}
+
+		&.hasBottomBorder {
+			> .cpnLabel {
+				line-height: calc(var(--input-height) - 0.5px);
+			}
+
+		}
+
+	}
+
+	&:not(.hasDropdownArrow) {
+		.cpnIcon > .material-icons {
+			display: none;
+		}
+
+	}
+
+	&.multiline {
+		height: var(--input-height);
+		flex-shrink: 0;
+
+		.box {
+			height: 100%;
+			margin-bottom: 0px;
+
+			> .input {
+				height: 100%;
+				line-height: 20px;
+				padding-left: 0px;
+				padding-right: 0px;
+				resize: none;
+				text-align: var(--input-textAlign);
+			}
+
+			> .cpnIcon {
+				height: calc(var(--global-giantPadding) * 2 - 22px);
+			}
+
+			> .line {
+				top: calc(var(--global-giantPadding) * 2 - 22px);
+			}
+
+		}
+
+	}
+
+	&.disabled {
+		.input {
+			border: none;
+		}
+
+	}
+
+	&.type-color {
+		.box {
+			input {
+				border: none;
+			}
+
+			.line {
+				display: none;
+			}
+
+		}
+
+	}
+
+	&.hidden {
+		display: none;
+	}
+
+	&.hasBottomBorder > .box > .input {
+		border-bottom-style: solid;
+		border-bottom-color: black;
+		border-bottom-width: 1px;
+	}
+
+	&:not(.hasBottomBorder) > .box {
+		margin-bottom: 0;
+	}
+
+	&.autoDropdown {
+		.box {
+			.cpnIcon {
+				width: 100%;
+				justify-content: flex-end;
+			}
+
+		}
+
+	}
+
+	&.hideNumberArrows {
+		.box input {
+			&::-webkit-outer-spin-button,
+			&::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+
+			-moz-appearance: textfield;
+		}
+
+	}
+
+}

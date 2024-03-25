@@ -1,0 +1,63 @@
+.cpnCamera {
+	display: flex;
+
+	> .cpnLabel {
+		flex-shrink: 0;
+		flex: 3;
+		margin-right: var(--global-padding);
+	}
+
+	> .box {
+		display: flex;
+		flex-direction: column;
+		flex: 8;
+
+		> .innerVideo {
+			display: flex;
+			flex-direction: column;
+			position: relative;
+			align-items: flex-start;
+
+			> canvas {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+			}
+
+		}
+
+		> .innerOptions {
+			display: flex;
+			margin-top: var(--global-smallPadding);
+			justify-content: flex-end;
+
+			.cpnButton + .cpnButton {
+				margin-left: var(--global-smallPadding);
+			}
+
+		}
+
+	}
+
+}
+
+.mobile .cpnCamera {
+	> .box {
+		> .innerOptions {
+			justify-content: flex-start;
+		}
+
+		.innerVideo {
+			> * {
+				position: relative;
+			}
+
+			img {
+				width: 100%;
+			}
+
+		}
+
+	}
+
+}

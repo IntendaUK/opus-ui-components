@@ -1,0 +1,27 @@
+{
+	"propSpecConfig": {
+		"path": "src/components/treeview/props.js",
+		"functions": [],
+		"dependents": [
+			{
+				"path": "src/components/dataLoader/propsShared.js",
+				"functions": [
+					{
+						"key": "filtersSet",
+						"path": "src/props/actions/filtersSet.js"
+					},
+					{
+						"key": "filtersDelete",
+						"path": "src/props/actions/filtersDelete.js"
+					}
+				],
+				"dependents": []
+			},
+			{
+				"path": "src/components/dataLoader/propsSharedExternal.js",
+				"functions": [],
+				"dependents": []
+			}
+		]
+	}
+}

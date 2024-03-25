@@ -1,0 +1,24 @@
+.cpnFocusLine {
+	width: 100%;
+	pointer-events: none;
+	position: relative;
+
+	&:after {
+		content: '';
+		left: 50%;
+		height: 100%;
+		width: 0px;
+		position: absolute;
+		transform: translateX(-50%);
+		transition-duration: var(--focusLine-animationDuration);
+		transition-timing-function: var(--focusLine-animationTimingFunction);
+		transition-property: background-color, width;
+		background-color: transparent;
+	}
+
+	&.active:after {
+		width: 100%;
+		background-color: var(--focusLine-backgroundColor);
+	}
+
+}

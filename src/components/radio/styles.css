@@ -1,0 +1,83 @@
+.cpnRadio {
+  display: flex;
+  flex-direction: row;
+  padding-top: var(--global-padding);
+  user-select: none;
+  position: relative;
+}
+.cpnRadio > .cpnLabel {
+  align-items: flex-start;
+  flex: 3;
+  justify-content: flex-start;
+  margin-right: calc(var(--global-padding) - 4px);
+}
+.cpnRadio > .options {
+  display: flex;
+  flex-direction: column;
+  flex: 8;
+}
+.cpnRadio > .options > .option {
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  padding-bottom: var(--global-smallPadding);
+  cursor: pointer;
+  flex: 1;
+}
+.cpnRadio > .options > .option > .icons {
+  width: 24px;
+  height: 24px;
+  user-select: none;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 0.5s;
+  transition-property: color;
+}
+.cpnRadio > .options > .option > .icons > .cpnIcon {
+  user-select: none;
+  cursor: pointer;
+  margin-top: -4px;
+}
+.cpnRadio > .options > .option > .icons > .cpnIcon.circle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transition-duration: 0.2s;
+  transition-property: color;
+}
+.cpnRadio > .options > .option > .icons > .cpnIcon.dot {
+  position: absolute;
+  opacity: 0;
+  font-size: 0px;
+  transition-duration: 0.2s;
+  transition-property: opacity, font-size, color;
+}
+.cpnRadio > .options > .option:hover .icons .dot {
+  opacity: 0.3;
+  font-size: 8px;
+  transition-duration: 0.25s;
+  transition-property: opacity, font-size;
+}
+.cpnRadio > .options > .option.active .icons {
+  transition-duration: 0.2s;
+  transition-property: color;
+}
+.cpnRadio > .options > .option.active .icons .dot {
+  opacity: 1;
+  font-size: 14px;
+  transition-duration: 0.2s;
+  transition-property: opacity, font-size;
+}
+.cpnRadio > .options > .option .cpnLabel {
+  flex: 1;
+  justify-content: left;
+  margin-left: 12px;
+}
+.cpnRadio.inline {
+  flex-direction: row;
+}
+.cpnRadio.inline .options {
+  flex-direction: row;
+}

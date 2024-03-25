@@ -1,0 +1,26 @@
+{
+    "propSpecConfig": {
+        "path": "src/components/input/props.js",
+        "functions": [
+            {
+                "key": "mapToColor",
+                "path": "src/props/cssMaps/mapToColor.js"
+            },
+            {
+                "key": "mapToSize",
+                "path": "src/props/cssMaps/mapToSize.js"
+            },
+            {
+                "key": "inputTypes",
+                "path": "src/components/input/config.js"
+            }
+        ],
+        "dependents": [
+            {
+                "path": "src/components/input/internalProps.js",
+                "functions": [],
+                "dependents": []
+            }
+        ]
+    }
+}

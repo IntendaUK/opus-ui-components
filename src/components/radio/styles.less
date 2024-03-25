@@ -1,0 +1,103 @@
+.cpnRadio {
+	display: flex;
+	flex-direction: row;
+	padding-top: var(--global-padding);
+	user-select: none;
+	position: relative;
+
+	> .cpnLabel {
+		align-items: flex-start;
+		flex: 3;
+		justify-content: flex-start;
+		margin-right: calc(var(--global-padding) - 4px);
+	}
+
+	> .options {
+		display: flex;
+		flex-direction: column;
+		flex: 8;
+
+		> .option {
+			display: flex;
+			flex-direction: row;
+			flex-shrink: 0;
+			padding-bottom: var(--global-smallPadding);
+			cursor: pointer;
+			flex: 1;
+
+			> .icons {
+				width: 24px;
+				height: 24px;
+				user-select: none;
+				position: relative;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				transition-duration: 0.5s;
+				transition-property: color;
+
+				> .cpnIcon {
+					user-select: none;
+					cursor: pointer;
+					margin-top: -4px;
+
+					&.circle {
+						position: absolute;
+						width: 24px;
+						height: 24px;
+						transition-duration: 0.2s;
+						transition-property: color;
+					}
+
+					&.dot {
+						position: absolute;
+						opacity: 0;
+						font-size: 0px;
+						transition-duration: 0.2s;
+						transition-property: opacity, font-size, color;
+					}
+
+				}
+
+			}
+
+			&:hover .icons .dot {
+				opacity: 0.3;
+				font-size: 8px;
+				transition-duration: 0.25s;
+				transition-property: opacity, font-size;
+			}
+
+			&.active .icons {
+				transition-duration: 0.2s;
+				transition-property: color;
+
+				.dot {
+					opacity: 1;
+					font-size: 14px;
+					transition-duration: 0.2s;
+					transition-property: opacity, font-size;
+				}
+
+			}
+
+			.cpnLabel {
+				flex: 1;
+				justify-content: left;
+				margin-left: 12px;
+			}
+
+		}
+
+	}
+
+	&.inline {
+		flex-direction: row;
+
+		.options {
+			flex-direction: row;
+		}
+
+	}
+
+}

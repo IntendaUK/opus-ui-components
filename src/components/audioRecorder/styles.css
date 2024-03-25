@@ -1,0 +1,21 @@
+.cpnAudioRecorder {
+  display: flex;
+}
+.cpnAudioRecorder > .cpnLabel {
+  flex-shrink: 0;
+  flex: 3;
+  margin-right: var(--global-padding);
+}
+.cpnAudioRecorder > .box {
+  display: flex;
+  flex-direction: column;
+  flex: 8;
+}
+.cpnAudioRecorder > .box .toolbar {
+  display: flex;
+  margin-top: var(--global-smallPadding);
+  justify-content: flex-end;
+}
+.cpnAudioRecorder > .box .toolbar .cpnButton + .cpnButton {
+  margin-left: var(--global-smallPadding);
+}

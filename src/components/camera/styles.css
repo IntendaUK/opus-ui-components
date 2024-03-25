@@ -1,0 +1,41 @@
+.cpnCamera {
+  display: flex;
+}
+.cpnCamera > .cpnLabel {
+  flex-shrink: 0;
+  flex: 3;
+  margin-right: var(--global-padding);
+}
+.cpnCamera > .box {
+  display: flex;
+  flex-direction: column;
+  flex: 8;
+}
+.cpnCamera > .box > .innerVideo {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+}
+.cpnCamera > .box > .innerVideo > canvas {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.cpnCamera > .box > .innerOptions {
+  display: flex;
+  margin-top: var(--global-smallPadding);
+  justify-content: flex-end;
+}
+.cpnCamera > .box > .innerOptions .cpnButton + .cpnButton {
+  margin-left: var(--global-smallPadding);
+}
+.mobile .cpnCamera > .box > .innerOptions {
+  justify-content: flex-start;
+}
+.mobile .cpnCamera > .box .innerVideo > * {
+  position: relative;
+}
+.mobile .cpnCamera > .box .innerVideo img {
+  width: 100%;
+}

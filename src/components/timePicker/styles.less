@@ -1,0 +1,118 @@
+.cpnTimePicker {
+	.value {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		cursor: pointer;
+
+		.cpnInput .box .input {
+			color: var(--timePicker-valueColor);
+		}
+
+		&:hover {
+			background-color: rgba(var(--timePicker-backgroundColorHover), var(--timePicker-backgroundOpacityHover));
+
+			.cpnInput .box .input {
+				color: var(--timePicker-valueColorHover);
+			}
+
+		}
+
+		&.active {
+			background-color: var(--timePicker-backgroundColorActive);
+
+			.cpnInput .box .input {
+				color: var(--timePicker-valueColorActive);
+			}
+
+		}
+
+	}
+
+}
+
+.cpnTimePicker-popup {
+	.clock {
+		margin-top: var(--global-padding);
+		background-color: var(--timePicker-popupBackgroundColor);
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.24);
+		padding: var(--global-smallPadding);
+		display: flex;
+		flex-direction: row;
+		height: var(--timePicker-popupHeight);
+
+		.column {
+			width: var(--global-bigPadding);
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+
+			& + .column {
+				margin-left: var(--global-smallPadding);
+			}
+
+			.heading {
+				color: var(--timePicker-popupHeadingColor);
+			}
+
+			.picker {
+				flex: 1;
+				overflow: hidden;
+				margin-top: var(--global-padding)var(--global-padding);
+				width: 100%;
+				cursor: pointer;
+				position: relative;
+
+				.option {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					color: var(--timePicker-popupOptionColor);
+				}
+
+				&:before {
+					content: '';
+					z-index: 1;
+					background: linear-gradient(0deg, var(--timePicker-popupBackgroundColor) 5%, rgba(var(--timePicker-popupBackgroundColorRgb), 0.6) 20%, rgba(var(--timePicker-popupBackgroundColorRgb), 0.5) 42%, rgba(var(--timePicker-popupBackgroundColorRgb), 0) 50%, rgba(var(--timePicker-popupBackgroundColorRgb), 0.5) 58%, rgba(var(--timePicker-popupBackgroundColorRgb), 0.6) 80%, var(--timePicker-popupBackgroundColor) 95%);
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					left: 0px;
+					top: 0px;
+					pointer-events: none;
+				}
+
+			}
+
+			&.amPm {
+				justify-content: center;
+
+				.option {
+					padding: var(--global-smallPadding);
+					cursor: pointer;
+					color: var(--timePicker-popupAmPmColor);
+					background-color: var(--timePicker-popupAmPmBackgroundColor);
+
+					&:hover {
+						color: var(--timePicker-popupAmPmColorHover);
+						background-color: rgba(var(--timePicker-popupAmPmBackgroundColorHover), var(--timePicker-popupAmPmBackgroundColorHoverOpacity));
+					}
+
+					& + .option {
+						margin-top: var(--global-smallPadding);
+					}
+
+					&.selected {
+						background-color: var(--timePicker-popupAmPmBackgroundColorActive);
+						color: var(--timePicker-popupAmPmColorActive);
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
