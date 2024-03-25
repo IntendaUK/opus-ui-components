@@ -4,7 +4,7 @@ import React from 'react';
 //Custom Hooks
 
 //System
-import { createContext, Popover } from 'opus-ui';
+import { createContext, Popover } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

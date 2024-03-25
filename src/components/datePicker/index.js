@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 //System
-import { createContext, ThemedComponent } from 'opus-ui';
+import { createContext, ThemedComponent } from '@intenda/opus-ui';
 
 //Component
 import DatesBox from './datesBox';

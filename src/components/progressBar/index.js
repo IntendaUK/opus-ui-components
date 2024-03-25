@@ -2,7 +2,7 @@
 import React from 'react';
 
 //External Helpers
-import { Popover } from 'opus-ui';
+import { Popover } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 
 //System
-import { createContext, PopoverOwnEvents, wrapWidgets } from 'opus-ui';
+import { createContext, PopoverOwnEvents, wrapWidgets } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

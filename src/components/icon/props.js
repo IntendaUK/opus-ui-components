@@ -1,5 +1,5 @@
 //CSS Map Functions
-import { mapToColor, mapToSize } from 'opus-ui';
+import { mapToColor, mapToSize } from '@intenda/opus-ui';
 
 //Props
 const props = {

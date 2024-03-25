@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 //External Props
-import { propsSharedDataLoader, propsSharedDataLoaderExternal } from 'opus-ui';
+import { propsSharedDataLoader, propsSharedDataLoaderExternal } from '@intenda/opus-ui';
 
 //Props
 const props = {

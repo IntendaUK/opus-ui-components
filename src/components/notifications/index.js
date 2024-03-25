@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 
 //System
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

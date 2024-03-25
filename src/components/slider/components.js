@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 //System
-import { createContext, useEffectSkipFirst } from 'opus-ui';
+import { createContext, useEffectSkipFirst } from '@intenda/opus-ui';
 
 //Events
 import { onAfterChange, onCallHandler, onChange, onValueManuallySet } from './events';

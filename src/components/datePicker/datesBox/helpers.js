@@ -1,5 +1,5 @@
 //External Helpers
-import { applyComparison, morphConfig } from 'opus-ui';
+import { applyComparison, morphConfig } from '@intenda/opus-ui';
 
 //Helpers
 export const canSelectDate = (props, day) => {

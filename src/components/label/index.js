@@ -2,7 +2,7 @@
 import React from 'react';
 
 //External Helpers
-import { PopoverOwnEvents } from 'opus-ui';
+import { PopoverOwnEvents } from '@intenda/opus-ui';
 
 //Events
 import { onClick } from './events';

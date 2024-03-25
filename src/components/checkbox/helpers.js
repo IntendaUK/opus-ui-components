@@ -1,5 +1,5 @@
 //External helpers
-import { clone } from 'opus-ui';
+import { clone } from '@intenda/opus-ui';
 
 const defaultIconMappings = {
 	true: 'check_box',

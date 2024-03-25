@@ -1,8 +1,8 @@
 /* eslint-disable max-len, max-lines, max-lines-per-function */
 
 //External props
-import { propsSharedDataLoader } from 'opus-ui';
-import { propsSharedDataLoaderExternal } from 'opus-ui';
+import { propsSharedDataLoader } from '@intenda/opus-ui';
+import { propsSharedDataLoaderExternal } from '@intenda/opus-ui';
 
 const props = {
 	rootNodeId: {

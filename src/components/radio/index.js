@@ -2,7 +2,7 @@
 import React, { useContext, useCallback } from 'react';
 
 //System
-import { createContext, Popover, generateClassNames } from 'opus-ui';
+import { createContext, Popover, generateClassNames } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

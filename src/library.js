@@ -66,7 +66,7 @@ import propsWebSocket from './components/webSocket/props';
 
 import 'material-icons/iconfont/material-icons.css';
 
-import { registerComponentTypes } from 'opus-ui';
+import { registerComponentTypes } from '@intenda/opus-ui';
 
 registerComponentTypes([{
 	type: 'audioPlayer',

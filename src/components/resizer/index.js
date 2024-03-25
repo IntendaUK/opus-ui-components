@@ -2,7 +2,7 @@
 import React from 'react';
 
 //System
-import { createContext, wrapWidgets } from 'opus-ui';
+import { createContext, wrapWidgets } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

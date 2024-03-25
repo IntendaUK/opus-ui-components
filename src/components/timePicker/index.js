@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 //System
-import { createContext, ThemedComponent } from 'opus-ui';
+import { createContext, ThemedComponent } from '@intenda/opus-ui';
 
 //Plugins
 import { usePopper } from 'react-popper';

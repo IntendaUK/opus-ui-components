@@ -1,4 +1,4 @@
-import { dateFormatter } from 'opus-ui';
+import { dateFormatter } from '@intenda/opus-ui';
 
 const onDayMonthYearChange = (
 	{ state: { value, valueFormatted, day, month, year, format } }, newState

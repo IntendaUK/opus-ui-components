@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 import { onTabClick } from './events';
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { createContext, generateClassNames } from 'opus-ui';
+import { createContext, generateClassNames } from '@intenda/opus-ui';
 
 import { onClose } from './events';
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useContext } from 'react';
 
 //System
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 //Helpers
 import onTriggerLookup from './onTriggerLookup';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { generateClassNames } from 'opus-ui';
+import { generateClassNames } from '@intenda/opus-ui';
 
 import { determineTransform } from './helpers.js';
 

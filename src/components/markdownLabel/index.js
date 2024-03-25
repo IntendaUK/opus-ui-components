@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 
 //External Helpers
-import { Popover, runScript } from 'opus-ui';
+import { Popover, runScript } from '@intenda/opus-ui';
 
 //Plugins
 import ReactMarkdown from 'react-markdown';

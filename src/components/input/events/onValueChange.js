@@ -1,5 +1,5 @@
 //External Helpers
-import { format, validate } from 'opus-ui';
+import { format, validate } from '@intenda/opus-ui';
 
 const onValueChange = props => {
 	const { setState, state } = props;

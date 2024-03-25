@@ -1,4 +1,4 @@
-import { generateGuid } from 'opus-ui';
+import { generateGuid } from '@intenda/opus-ui';
 
 import { notifyGlobally } from './helpers';
 

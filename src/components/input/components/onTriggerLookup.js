@@ -1,5 +1,5 @@
 //System Helpers
-import { getScopedId } from 'opus-ui';
+import { getScopedId } from '@intenda/opus-ui';
 
 //Internals
 const defaultPassthroughPrps = [

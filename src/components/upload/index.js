@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 import './styles.css';
 

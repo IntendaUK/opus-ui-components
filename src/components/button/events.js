@@ -1,5 +1,5 @@
 //External Helpers
-import { runScript } from 'opus-ui';
+import { runScript } from '@intenda/opus-ui';
 
 //Events
 export const onClick = ({ setState }, e) => {

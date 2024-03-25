@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 
 //System
-import { createContext, ThemedComponent, DataLoaderHelper } from 'opus-ui';
+import { createContext, ThemedComponent, DataLoaderHelper } from '@intenda/opus-ui';
 
 //Events
 import onBuildMda from './events/onBuildMda';

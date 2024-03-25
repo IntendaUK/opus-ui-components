@@ -1,7 +1,7 @@
 /* eslint-disable max-lines, max-len */
 
 //CSS Map Functions
-import { mapToColor, mapToSize } from 'opus-ui';
+import { mapToColor, mapToSize } from '@intenda/opus-ui';
 
 //Config
 import inputTypes from './config';

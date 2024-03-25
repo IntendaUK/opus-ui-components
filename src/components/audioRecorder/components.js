@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 import { onRecordClick, onStopClick, onCancelClick, onClearClick } from './events';
 
 const AudioRecorderContext = createContext('audioRecorder');

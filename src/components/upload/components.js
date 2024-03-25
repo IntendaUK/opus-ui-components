@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef } from 'react';
 
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 import { onInputRefChanged } from './events';
 import { handleFiles } from './events';

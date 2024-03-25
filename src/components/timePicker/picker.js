@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 //System
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';

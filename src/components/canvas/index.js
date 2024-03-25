@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 
 //System
-import { createContext, resolveThemeAccessor } from 'opus-ui';
+import { createContext, resolveThemeAccessor } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

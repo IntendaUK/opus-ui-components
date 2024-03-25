@@ -1,5 +1,5 @@
 //System Helpers
-import { clone, runScript } from 'opus-ui';
+import { clone, runScript } from '@intenda/opus-ui';
 
 //External Helpers
 import { generateWrapperMda } from '../../repeater/helpers';

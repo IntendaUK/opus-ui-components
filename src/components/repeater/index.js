@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useMemo, forwardRef, useCallback } from 'react';
 
 //System
-import { createContext, DataLoaderHelper } from 'opus-ui';
+import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
 
 //Helpers
 import { generateWrapperMda } from './helpers';

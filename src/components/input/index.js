@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 
 //System
-import { createContext, useEffectSkipFirst, validate } from 'opus-ui';
+import { createContext, useEffectSkipFirst, validate } from '@intenda/opus-ui';
 
 //Components
 import { Box } from './components';

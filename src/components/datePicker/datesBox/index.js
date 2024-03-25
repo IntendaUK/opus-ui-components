@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 //System
-import { createContext, generateClassNames } from 'opus-ui';
+import { createContext, generateClassNames } from '@intenda/opus-ui';
 
 //Helpers
 import { canSelectDate } from './helpers';

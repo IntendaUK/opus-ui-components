@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 //CSS Map Functions
-import { mapToColor } from 'opus-ui';
+import { mapToColor } from '@intenda/opus-ui';
 
 //Props
 const props = {

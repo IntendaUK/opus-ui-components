@@ -1,5 +1,5 @@
 //External Helpers
-import { validate } from 'opus-ui';
+import { validate } from '@intenda/opus-ui';
 
 //Helpers
 import loadLookupValues from './helpers/loadLookupValues';

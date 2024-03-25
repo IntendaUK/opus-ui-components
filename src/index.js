@@ -71,7 +71,7 @@ import propsVideoPlayer from './components/videoPlayer/props';
 import propsWebSocket from './components/webSocket/props';
 
 //Opus Lib
-import Opus from 'opus-ui';
+import Opus from '@intenda/opus-ui';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

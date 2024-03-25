@@ -2,7 +2,7 @@
 import React, { useEffect, useContext, useRef } from 'react';
 
 // System
-import { createContext, PopoverOwnRef } from 'opus-ui';
+import { createContext, PopoverOwnRef } from '@intenda/opus-ui';
 
 // Components
 import { FormattedInput } from './formattedInput';

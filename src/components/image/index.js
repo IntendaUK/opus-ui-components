@@ -2,10 +2,10 @@
 import React, { useContext } from 'react';
 
 //System
-import { createContext } from 'opus-ui';
+import { createContext } from '@intenda/opus-ui';
 
 //External Helpers
-import { Popover } from 'opus-ui';
+import { Popover } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

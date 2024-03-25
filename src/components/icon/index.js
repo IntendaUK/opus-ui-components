@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 
 //System
-import { createContext, PopoverOwnEvents } from 'opus-ui';
+import { createContext, PopoverOwnEvents } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';

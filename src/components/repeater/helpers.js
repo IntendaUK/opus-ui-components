@@ -4,7 +4,7 @@
 */
 
 //External Helpers
-import { generateGuid, getDeepProperty, clone } from 'opus-ui';
+import { generateGuid, getDeepProperty, clone } from '@intenda/opus-ui';
 
 //A list of keys upon which the repeater should stop drilling into metadata
 const stopDrillingKeys = ['rowMda'];
