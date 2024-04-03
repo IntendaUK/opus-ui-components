@@ -13,7 +13,7 @@ import './styles.css';
 //Helpers
 /* eslint-disable-next-line max-lines-per-function */
 const buildMarkdownOverrides = (
-	{ allowScriptAnchors, overrideStyles, assignIdsToHeadingTypes }
+	{ allowScriptAnchors, overrideStyles, assignIdsToHeadingTypes, allowAnchorAttributes }
 ) => {
 	const res = {};
 
@@ -32,6 +32,22 @@ const buildMarkdownOverrides = (
 			return (
 				<a {...aProps}>
 					{parsed.cpt}
+				</a>
+			);
+		};
+	}
+
+	if (allowAnchorAttributes) {
+		res.a = props => {
+			let parsed = props.children[0];
+
+			try {
+				parsed = JSON.parse(parsed);
+			} catch (e) {}
+
+			return (
+				<a {...parsed.attributes} href={props.href}>
+					{parsed.cpt ?? parsed}
 				</a>
 			);
 		};
@@ -58,7 +74,8 @@ const buildMarkdownOverrides = (
 //Exports
 export const MarkdownLabel = props => {
 	const { id, classNames, style, attributes, state } = props;
-	const { cpt, allowScriptAnchors, overrideStyles, assignIdsToHeadingTypes } = state;
+	const { cpt, overrideStyles, assignIdsToHeadingTypes } = state;
+	const { allowScriptAnchors, allowAnchorAttributes } = state;
 
 	const builtOverrides = useMemo(() => {
 		if (!allowScriptAnchors && !assignIdsToHeadingTypes)
@@ -67,7 +84,8 @@ export const MarkdownLabel = props => {
 		return buildMarkdownOverrides({
 			allowScriptAnchors,
 			overrideStyles,
-			assignIdsToHeadingTypes
+			assignIdsToHeadingTypes,
+			allowAnchorAttributes
 		});
 	}, [allowScriptAnchors, overrideStyles, assignIdsToHeadingTypes]);
 

@@ -244,6 +244,7 @@ root.render(
 				prps: {
 					cpt: `# I am an h1
 [Normal link](https://www.google.com)
+[{"cpt": "Link that should open in a new tab", "attributes": {"target": "_blank"}}](https://www.google.com)
 \`{
 	"cpt": "Link that calls a script",
 	"style": "actionLink",
@@ -256,6 +257,7 @@ root.render(
 }\`
 `,
 					allowScriptAnchors: true,
+					allowAnchorAttributes: true,
 					overrideStyles: { actionLink: { color: 'red' } },
 					assignIdsToHeadingTypes: ['h1']
 				}
