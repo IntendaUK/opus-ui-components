@@ -1,9 +1,9 @@
 {
 	"name": "@intenda/opus-ui-components",
-	"version": "0.11.0",
+	"version": "1.0.0",
 	"private": false,
 	"main": "dist/library.js",
-	"homepage": ".",
+	"homepage": "https://opus-ui.com",
 	"dependencies": {
 		"@babel/core": "^7.22.1",
 		"@babel/preset-env": "^7.22.2",
@@ -21,13 +21,14 @@
 		"opus"
 	],
 	"peerDependencies": {
-		"@intenda/opus-ui": ">=0.0.1 <= 2.0.0",
+		"@intenda/opus-ui": ">=1.0.0 < 2.0.0",
 		"babel-preset-react-app": "^10.0.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-scripts": "^5.0.1",
 		"keen-slider": "^6.8.5",
 		"react-input-mask": "^2.0.4",
+		"react-markdown": "^8.0.7",
 		"react-number-format": "^5.2.2",
 		"material-icons": "^1.13.11",
 		"react-signature-canvas": "^1.0.6",
@@ -56,9 +57,7 @@
 		"eslint-plugin-jsx-a11y": "6.7.1",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-react": "^7.32.2",
-		"eslint-plugin-react-hooks": "^4.6.0",
-		"install": "^0.13.0",
-		"npm": "^9.6.7"
+		"eslint-plugin-react-hooks": "^4.6.0"
 	},
 	"publishConfig": {
 		"access": "public"

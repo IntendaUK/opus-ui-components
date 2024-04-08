@@ -88,7 +88,7 @@ const VirtualizedItem = ({ index, style, data }) => (
 
 const VirtualizedInner = () => {
 	const { id, getHandler, state } = useContext(RepeaterContext);
-	const { childMda, width, height } = state;
+	const { childMda, width, height, prpsVirtualizedContainer } = state;
 	const { virtualizedDirection, virtualizedItemSize } = state;
 
 	const itemData = useMemo(getHandler(buildVirtualizedChildData), [childMda]);
@@ -99,17 +99,23 @@ const VirtualizedInner = () => {
 	if (!childMda)
 		return null;
 
+	const listPrps = {
+		id,
+		itemCount: childMda.length,
+		itemSize: virtualizedItemSize,
+		layout: virtualizedDirection,
+		itemData,
+		outerElementType: outer,
+		...prpsVirtualizedContainer
+	};
+
+	if (width)
+		listPrps.width = +((width + '').replace('px', ''));
+	if (height)
+		listPrps.height = +((height + '').replace('px', ''));
+
 	return (
-		<List
-			id={id}
-			width={width}
-			itemCount={childMda.length}
-			itemSize={virtualizedItemSize}
-			layout={virtualizedDirection}
-			height={+(height.replace('px', ''))}
-			itemData={itemData}
-			outerElementType={outer}
-		>
+		<List {...listPrps}>
 			{inner}
 		</List>
 	);

@@ -37,6 +37,13 @@ const props = {
 	virtualizedItemSize: {
 		type: 'integer',
 		desc: 'Defines the height or width of virtualized items (depending on virtualizedDirection). If this is not known and set, virtualization can not be used'
+	},
+	prpsVirtualizedContainer: {
+		type: 'object',
+		desc: 'Defines properties to be applied to the virtualized container, when present',
+		dft: ({ virtualized }) => {
+			return virtualized ? {} : undefined;
+		}
 	}
 };
 
