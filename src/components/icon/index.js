@@ -6,6 +6,7 @@ import { createContext, PopoverOwnEvents } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';
+import 'material-icons/iconfont/material-icons.css';
 
 const IconContext = createContext('iconContext');
 
