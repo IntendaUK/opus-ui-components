@@ -4,6 +4,7 @@
 		"functions": [],
 		"dependents": [
 			{
+				"fileExistsInOpusUiFolder": true,
 				"path": "src/components/dataLoader/propsShared.js",
 				"functions": [
 					{
@@ -18,6 +19,7 @@
 				"dependents": []
 			},
 			{
+				"fileExistsInOpusUiFolder": true,
 				"path": "src/components/dataLoader/propsSharedExternal.js",
 				"functions": [],
 				"dependents": []
