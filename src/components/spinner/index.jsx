@@ -5,7 +5,7 @@ import React from 'react';
 import { Popover } from '@intenda/opus-ui';
 
 //Components
-import { Filler } from './components.js';
+import { Filler } from './components';
 
 //Styles
 import './styles.css';

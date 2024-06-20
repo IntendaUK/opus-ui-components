@@ -2,7 +2,7 @@ import React from 'react';
 
 import { generateClassNames } from '@intenda/opus-ui';
 
-import { determineTransform } from './helpers.js';
+import { determineTransform } from './helpers';
 
 export const indeterminateSpinner = () => {
 	return (
