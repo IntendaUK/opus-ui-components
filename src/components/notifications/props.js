@@ -13,7 +13,13 @@ const props = {
 			autoClose: 'boolean',
 			duration: 'number',
 			isGlobal: 'boolean'
-		}
+		},
+		setAction: (oldValue = [], newValue) => {
+			if (!newValue.push)
+				newValue = [newValue];
+
+			return [...oldValue, ...newValue];
+		},
 	},
 	duration: {
 		type: 'number',
