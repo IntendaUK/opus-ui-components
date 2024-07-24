@@ -8,18 +8,24 @@ const props = {
 	newMsg: {
 		type: 'object',
 		desc: 'The notification message object',
-		spec: {
+		spec: [{
 			msg: 'string',
 			autoClose: 'boolean',
 			duration: 'number',
 			isGlobal: 'boolean'
-		},
+		}],
 		setAction: (oldValue = [], newValue) => {
 			if (!newValue.push)
 				newValue = [newValue];
 
 			return [...oldValue, ...newValue];
 		},
+		deleteAction: (oldValue = []) => {
+			oldValue.length = 0;
+
+			return oldValue;
+		},
+		dft: () => []
 	},
 	duration: {
 		type: 'number',

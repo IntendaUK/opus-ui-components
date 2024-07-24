@@ -1,3 +1,6 @@
+//Opus Lib
+import { registerComponentTypes, registerExternalAction } from '@intenda/opus-ui';
+
 //Components
 import { AudioPlayer } from './components/audioPlayer';
 import { AudioRecorder } from './components/audioRecorder';
@@ -64,10 +67,19 @@ import propsUrl from './components/url/props';
 import propsVideoPlayer from './components/videoPlayer/props';
 import propsWebSocket from './components/webSocket/props';
 
+//Styles
 import 'material-icons/iconfont/material-icons.css';
 
-import { registerComponentTypes } from '@intenda/opus-ui';
+//Script Actions
+import showNotification from './scriptActions/showNotification';
 
+//External Actions
+registerExternalAction({
+	type: 'showNotification',
+	handler: showNotification
+});
+
+//Components
 registerComponentTypes([{
 	type: 'audioPlayer',
 	component: AudioPlayer,

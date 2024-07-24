@@ -30,7 +30,7 @@ export const onRemoveMsgMessage = props => {
 export const onGetMessage = ({ getHandler, setState, state }) => {
 	const { newMsg: messageArray, duration } = state;
 
-	if (!messageArray?.length)
+	if (!messageArray.length)
 		return;
 
 	const newState = { deleteKeys: ['newMsg'] };
