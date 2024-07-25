@@ -73,6 +73,9 @@ import 'material-icons/iconfont/material-icons.css';
 //Script Actions
 import showNotification from './scriptActions/showNotification';
 
+// Exports
+export { default as showNotification } from './scriptActions/showNotification';
+
 //External Actions
 registerExternalAction({
 	type: 'showNotification',
