@@ -1,8 +1,128 @@
 {
 	"components": [
 		{
-			"name": "codeEditor",
-			"path": "dist/components/codeEditor"
+			"name": "audioPlayer",
+			"path": "dist/components/audioPlayer"
+		},
+		{
+			"name": "audioRecorder",
+			"path": "dist/components/audioRecorder"
+		},
+		{
+			"name": "button",
+			"path": "dist/components/button"
+		},
+		{
+			"name": "camera",
+			"path": "dist/components/camera"
+		},
+		{
+			"name": "canvas",
+			"path": "dist/components/canvas"
+		},
+		{
+			"name": "checkbox",
+			"path": "dist/components/checkbox"
+		},
+		{
+			"name": "code",
+			"path": "dist/components/code"
+		},
+		{
+			"name": "datePicker",
+			"path": "dist/components/datePicker"
+		},
+		{
+			"name": "divider",
+			"path": "dist/components/divider"
+		},
+		{
+			"name": "focusLine",
+			"path": "dist/components/focusLine"
+		},
+		{
+			"name": "html",
+			"path": "dist/components/html"
+		},
+		{
+			"name": "icon",
+			"path": "dist/components/icon"
+		},
+		{
+			"name": "image",
+			"path": "dist/components/image"
+		},
+		{
+			"name": "input",
+			"path": "dist/components/input"
+		},
+		{
+			"name": "label",
+			"path": "dist/components/label"
+		},
+		{
+			"name": "markdownLabel",
+			"path": "dist/components/markdownLabel"
+		},
+		{
+			"name": "notifications",
+			"path": "dist/components/notifications"
+		},
+		{
+			"name": "progressBar",
+			"path": "dist/components/progressBar"
+		},
+		{
+			"name": "radio",
+			"path": "dist/components/radio"
+		},
+		{
+			"name": "repeater",
+			"path": "dist/components/repeater"
+		},
+		{
+			"name": "resizer",
+			"path": "dist/components/resizer"
+		},
+		{
+			"name": "slider",
+			"path": "dist/components/slider"
+		},
+		{
+			"name": "spinner",
+			"path": "dist/components/spinner"
+		},
+		{
+			"name": "tab",
+			"path": "dist/components/tab"
+		},
+		{
+			"name": "tabContainer",
+			"path": "dist/components/tabContainer"
+		},
+		{
+			"name": "timePicker",
+			"path": "dist/components/timePicker"
+		},
+		{
+			"name": "treeview",
+			"path": "dist/components/treeview"
+		},
+		{
+			"name": "upload",
+			"path": "dist/components/upload"
+		},
+		{
+			"name": "url",
+			"path": "dist/components/url"
+		},
+		{
+			"name": "videoPlayer",
+			"path": "dist/components/videoPlayer"
+		},
+		{
+			"name": "webSocket",
+			"path": "dist/components/webSocket"
 		}
 	]
 }
