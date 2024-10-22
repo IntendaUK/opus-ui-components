@@ -1,26 +1,26 @@
 {
 	"propSpecConfig": {
-		"path": "src/components/repeater/props.js",
+		"path": "dist/components/repeater/props.js",
 		"functions": [],
 		"dependents": [
 			{
 				"fileExistsInOpusUiFolder": true,
-				"path": "src/components/dataLoader/propsShared.js",
+				"path": "dist/components/dataLoader/propsShared.js",
 				"functions": [
 					{
 						"key": "filtersSet",
-						"path": "src/props/actions/filtersSet.js"
+						"path": "dist/props/actions/filtersSet.js"
 					},
 					{
 						"key": "filtersDelete",
-						"path": "src/props/actions/filtersDelete.js"
+						"path": "dist/props/actions/filtersDelete.js"
 					}
 				],
 				"dependents": []
 			},
 			{
 				"fileExistsInOpusUiFolder": true,
-				"path": "src/components/dataLoader/propsSharedExternal.js",
+				"path": "dist/components/dataLoader/propsSharedExternal.js",
 				"functions": [],
 				"dependents": []
 			}

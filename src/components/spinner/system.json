@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/spinner/props.js",
+        "path": "dist/components/spinner/props.js",
         "functions": [],
         "dependents": []
     }

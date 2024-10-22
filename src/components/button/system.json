@@ -1,14 +1,14 @@
 {
     "propSpecConfig": {
-        "path": "src/components/button/props.js",
+        "path": "dist/components/button/props.js",
         "functions": [
             {
                 "key": "mapToColor",
-                "path": "src/props/cssMaps/mapToColor.js"
+                "path": "dist/props/cssMaps/mapToColor.js"
             },
             {
                 "key": "mapToSize",
-                "path": "src/props/cssMaps/mapToSize.js"
+                "path": "dist/props/cssMaps/mapToSize.js"
             }
         ],
         "dependents": []

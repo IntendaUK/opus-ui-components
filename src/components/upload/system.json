@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/upload/props.js",
+        "path": "dist/components/upload/props.js",
         "functions": [],
         "dependents": []
     }

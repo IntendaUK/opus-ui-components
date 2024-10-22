@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/tabContainer/props.js",
+        "path": "dist/components/tabContainer/props.js",
         "functions": [],
         "dependents": []
     }

@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/webSocket/props.js",
+        "path": "dist/components/webSocket/props.js",
         "functions": [],
         "dependents": []
     }

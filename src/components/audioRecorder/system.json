@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/audioRecorder/props.js",
+        "path": "dist/components/audioRecorder/props.js",
         "functions": [],
         "dependents": []
     }

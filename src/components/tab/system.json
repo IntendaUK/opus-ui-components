@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/tab/props.js",
+        "path": "dist/components/tab/props.js",
         "functions": [],
         "dependents": []
     }

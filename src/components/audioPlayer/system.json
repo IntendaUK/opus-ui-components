@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/audioPlayer/props.js",
+        "path": "dist/components/audioPlayer/props.js",
         "functions": [],
         "dependents": []
     }

@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/canvas/props.js",
+        "path": "dist/components/canvas/props.js",
         "functions": [],
         "dependents": []
     }

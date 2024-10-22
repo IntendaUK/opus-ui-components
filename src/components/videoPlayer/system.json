@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/videoPlayer/props.js",
+        "path": "dist/components/videoPlayer/props.js",
         "functions": [],
         "dependents": []
     }

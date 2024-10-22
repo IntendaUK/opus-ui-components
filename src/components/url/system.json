@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/url/props.js",
+        "path": "dist/components/url/props.js",
         "functions": [],
         "dependents": []
     }

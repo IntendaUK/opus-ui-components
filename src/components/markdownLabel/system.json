@@ -1,6 +1,6 @@
 {
     "propSpecConfig": {
-        "path": "src/components/markdownLabel/props.js",
+        "path": "dist/components/markdownLabel/props.js",
         "functions": [],
         "dependents": []
     }
