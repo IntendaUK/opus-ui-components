@@ -77,16 +77,19 @@ export const onFocus = ({ setState, emit }, e) => {
 
 export const onBlur = (props, e) => {
 	const { setState, emit, state: { handlerOnBlur, value, loadLookupValueOnBlur } } = props;
-
+   
 	setState({ hasFocus: false });
-	emit('onBlur', e);
 	validate(props);
-
+   
 	if (loadLookupValueOnBlur)
 		loadLookupValues(props);
-
+   
 	if (handlerOnBlur)
 		handlerOnBlur(value);
+   
+	setTimeout(() => {
+		emit('onBlur', e);
+	});
 };
 
 export const onSelect = (props, e) => {
