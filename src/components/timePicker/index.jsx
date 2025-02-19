@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { createContext, ThemedComponent } from '@intenda/opus-ui';
 
 //Plugins
-import { usePopper } from 'react-popper';
+import { useFloating } from '@floating-ui/react';
 import 'keen-slider/keen-slider.min.css';
 
 //Components
@@ -79,27 +79,29 @@ const Popup = ({ parentRef }) => {
 	const { style, state: { active, popoverZIndex } } = useContext(TimePickerContext);
 
 	const [popperElement, setPopperElement] = useState(null);
-	const popperProps = usePopper(parentRef, popperElement, { placement: 'bottom' });
+	const { refs, floatingStyles } = useFloating({
+		elements: {
+			reference: parentRef,
+		},
+		placement: 'bottom'
+	});
 
 	if (!active)
 		return null;
 
-	const { styles: stylesPopper, attributes } = popperProps;
-
 	const container = document.getElementById('POPOVERS');
 
 	const styles = {
-		...stylesPopper.popper,
+		...floatingStyles,
 		...style,
 		zIndex: popoverZIndex
 	};
 
 	const el = (
 		<div
-			ref={setPopperElement}
+			ref={refs.setFloating}
 			style={styles}
 			className='cpnTimePicker-popup'
-			{...attributes.popper}
 		>
 			<Clock />
 		</div>

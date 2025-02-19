@@ -12,7 +12,7 @@ import DatesBox from './datesBox';
 import { onChangeMonth, onSync, onSelectedValueChange, onToggle, onOverrideValue } from './events';
 
 //Plugins
-import { usePopper } from 'react-popper';
+import { useFloating } from '@floating-ui/react';
 
 //Styles
 import './styles.css';
@@ -77,28 +77,30 @@ const Calendar = () => {
 const Popup = ({ parentRef }) => {
 	const { stylePopup, state: { active, popoverZIndex } } = useContext(DatePickerContext);
 
-	const [popperElement, setPopperElement] = useState(null);
-	const popperProps = usePopper(parentRef, popperElement, { placement: 'bottom' });
+	const { refs, floatingStyles } = useFloating({
+		elements: {
+			reference: parentRef,
+		},
+		placement: 'bottom'
+	});
 
 	if (!active)
 		return null;
 
-	const { styles: stylesPopper, attributes } = popperProps;
 
 	const container = document.getElementById('POPOVERS');
 
 	const styles = {
-		...stylesPopper.popper,
+		...floatingStyles,
 		...stylePopup,
 		zIndex: popoverZIndex
 	};
 
 	const el = (
 		<div
-			ref={setPopperElement}
+			ref={refs.setFloating}
 			style={styles}
 			className='cpnDatePicker-popup'
-			{...attributes.popper}
 		>
 			<Calendar />
 		</div>
