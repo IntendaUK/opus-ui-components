@@ -19,7 +19,7 @@ const buildMarkdownOverrides = (
 
 	if (allowScriptAnchors) {
 		res.code = props => {
-			const parsed = JSON.parse(props.children[0]);
+			const parsed = JSON.parse(props.children);
 			const style = overrideStyles?.[parsed.style];
 
 			const aProps = {
@@ -39,7 +39,7 @@ const buildMarkdownOverrides = (
 
 	if (allowAnchorAttributes) {
 		res.a = props => {
-			let parsed = props.children[0];
+			let parsed = props.children;
 
 			try {
 				parsed = JSON.parse(parsed);
@@ -56,7 +56,7 @@ const buildMarkdownOverrides = (
 	if (assignIdsToHeadingTypes) {
 		assignIdsToHeadingTypes.forEach(t => {
 			res[t] = props => {
-				const Tag = `h${props.level}`;
+				const Tag = props.node.tagName;
 				const id = props.children[0].toLowerCase().replaceAll(' ', '-');
 
 				return (
