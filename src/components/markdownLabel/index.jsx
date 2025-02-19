@@ -57,11 +57,11 @@ const buildMarkdownOverrides = (
 		assignIdsToHeadingTypes.forEach(t => {
 			res[t] = props => {
 				const Tag = props.node.tagName;
-				const id = props.children[0].toLowerCase().replaceAll(' ', '-');
+				const id = props.children.toLowerCase().replaceAll(' ', '-');
 
 				return (
 					<Tag id={id}>
-						{props.children[0]}
+						{props.children}
 					</Tag>
 				);
 			};
