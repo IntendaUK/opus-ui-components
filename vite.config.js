@@ -74,6 +74,8 @@ async function fileExists (path) {
 	}
 }
 
+const ReactCompilerConfig = { target: '19' };
+
 export default defineConfig(async () => {
 	let monorepoAliases = {};
 	let monorepoWatchPaths = [];
