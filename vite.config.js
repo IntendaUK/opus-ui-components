@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function */
+
 import { resolve } from 'node:path';
 
 import react from '@vitejs/plugin-react';
@@ -105,7 +107,14 @@ export default defineConfig(async () => {
 		plugins: [
 			customCopyPlugin(),
 			libCss(),
-			react()
+			react({
+				babel: {
+					compact: true,
+					plugins: [
+						['babel-plugin-react-compiler', ReactCompilerConfig]
+					]
+				}
+			})
 		],
 		build: {
 			lib: {
