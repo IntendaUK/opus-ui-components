@@ -23,7 +23,8 @@ export const onSelectDate = (
 		day: newDay,
 		month: selectedMonth,
 		year: selectedYear,
-		active: false
+		active: false,
+		deleteKeys: ['valueOverride']
 	});
 };
 

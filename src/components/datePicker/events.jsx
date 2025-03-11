@@ -143,9 +143,10 @@ export const onOverrideValue = props => {
 	if (!valueOverride)
 		return;
 
-	const newState = { deleteKeys: ['valueOverride'] };
+	const newState = {
+		deleteKeys: ['valueOverride']
+	};
 
-	//Trick the onValueChange event into using the new value instead
 	const fakeProps = {
 		state: {
 			value: valueOverride,
