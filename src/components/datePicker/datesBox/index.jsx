@@ -12,9 +12,17 @@ const DatePickerContext = createContext('datePicker');
 
 //Events
 export const onSelectDate = (
-	{ setState, state: { day, month, year, selectedMonth, selectedYear } }, newDay, e
+	{ setState, state: { day, month, year, selectedMonth, selectedYear, closePopupOnClickSelectedDate } }, newDay, e
 ) => {
 	e.stopPropagation();
+
+	if (closePopupOnClickSelectedDate === true && day === newDay && month === selectedMonth && year === selectedYear) {
+		setState({
+			active: false
+		});
+
+		return;
+	}
 
 	if (day === newDay && month === selectedMonth && year === selectedYear)
 		return;
