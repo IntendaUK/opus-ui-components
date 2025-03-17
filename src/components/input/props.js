@@ -109,7 +109,10 @@ const props = {
 		dft: ({ dataType }) => {
 			if (dataType === 'decimal')
 				return 2;
-		}
+		},
+		//Scale is a base attribute. Due to this hack, we need to scale inputs with style: { scale: 2 }
+		cssAttr: false,
+		cssAttrVal: false
 	},
 	decimalScale: {
 		type: 'number',
