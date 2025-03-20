@@ -352,6 +352,11 @@ const props = {
 		cssVarVal: mapToSize,
 		cssVarGroup: 'stylePopup',
 		dft: '200px'
+	},
+
+	closePopupOnClickSelectedDate: {
+		type: 'boolean',
+		desc: 'When set to true, closes the date picker popup when clicking on the currently selected date'
 	}
 };
 
