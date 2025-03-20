@@ -24,8 +24,7 @@ const onDayMonthYearChange = (
 		{
 			dateObject: newDateObject,
 			monthName,
-			value: newValue,
-			valueFormatted
+			value: newValue
 		});
 };
 
@@ -139,25 +138,31 @@ export const onChangeMonth = ({ setState, state: { selectedMonth, selectedYear }
 
 export const onOverrideValue = props => {
 	const { setState, state } = props;
-	const { valueOverride, day, month, year } = state;
+	const { valueOverride, format, day, month, year } = state;
 
 	if (!valueOverride)
 		return;
 
-	const newState = { deleteKeys: ['valueOverride'] };
+	const newState = {
+		deleteKeys: ['valueOverride']
+	};
 
-	//Trick the onValueChange event into using the new value instead
 	const fakeProps = {
 		state: {
 			value: valueOverride,
 			day,
 			month,
-			year
+			year,
+			format
 		}
 	};
 	onValueChange(fakeProps, newState);
 
-	newState.value = valueOverride;
+	delete fakeProps.state.value;
+	Object.assign(fakeProps.state, newState);
+	delete fakeProps.state.value;
+
+	onDayMonthYearChange(fakeProps, newState);
 
 	setState(newState);
 };
