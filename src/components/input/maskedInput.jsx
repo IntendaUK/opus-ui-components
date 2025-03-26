@@ -11,13 +11,13 @@ import { onMaskedInputChange } from './events';
 import { buildInputProps } from './helpers';
 
 //Plugins
-import InputMask from 'react-input-mask';
+import InputMask from '@mona-health/react-input-mask';
 
 const InputContext = createContext('input');
 
 export const MaskedInput = () => {
 	const props = useContext(InputContext);
-	const { getHandler, state: { mask, maskChar, alwaysShowMask } } = props;
+	const { getHandler, state: { mask, alwaysShowMask, maskPlaceholder } } = props;
 
 	const inputProps = buildInputProps(props);
 	const handlerOnChange = getHandler(onMaskedInputChange);
@@ -28,7 +28,7 @@ export const MaskedInput = () => {
 		<InputMask
 			{...inputProps}
 			mask={mask}
-			maskChar={maskChar}
+			maskPlaceholder={maskPlaceholder}
 			alwaysShowMask={alwaysShowMask}
 			onChange={handlerOnChange}
 		/>

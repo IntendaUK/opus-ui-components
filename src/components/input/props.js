@@ -53,22 +53,19 @@ const props = {
 		desc: 'When true, the input will have a label',
 		dft: true
 	},
-	mask: {
+	maskPlaceholder: {
 		type: 'string',
-		desc: 'The string spec for which masks each character of the input\'s value as defined by the mask char',
+		desc: 'Character or string to cover unfilled parts of the mask. Default character is "_". If set to null or empty string, unfilled parts will be empty as in a regular input. Read more at https://github.com/sanniassin/react-input-mask/',
 		spec: '9999, aaa, ***-**-***, 99-a-***'
 	},
-	maskChar: {
+	mask: {
 		type: 'string',
-		desc: 'Applies masking rules for each character for the input\'s value. If a "9" is supplied, only numbers in the range: [0-9] can be entered (for that specific character). If an "a" is supplied, only characters in the range: [a-z / A-Z] can be entered. If a "*" is supplied, anything can be entered',
-		dft: ({ mask = undefined }) => {
-			if (mask !== undefined)
-				return '*';
-		}
+		desc: 'Mask format. Can be either a string or array of characters and regular expressions. Read more at https://github.com/sanniassin/react-input-mask/',
+		spec: '9999, aaa, ***-**-***, 99-a-***'
 	},
 	alwaysShowMask: {
 		type: 'boolean',
-		desc: 'If true, the mask character will always be shown, even when completed',
+		desc: 'When set to true, relevant parts of the mask will always be shown, even when completed. Read more at https://github.com/sanniassin/react-input-mask/',
 		dft: ({ mask = undefined }) => {
 			if (mask !== undefined)
 				return false;
