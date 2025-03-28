@@ -1,0 +1,44 @@
+{
+	"acceptPrps": {},
+	"type": "containerSimple",
+	"wgts": [
+		{
+			"id": "stateSetter-target",
+			"type": "input",
+			"prps": {
+				"placeholder": "target"
+			}
+		},
+		{
+			"id": "stateSetter-key",
+			"type": "input",
+			"prps": {
+				"placeholder": "key"
+			}
+		},
+		{
+			"id": "stateSetter-value",
+			"type": "input",
+			"prps": {
+				"placeholder": "value"
+			}
+		},
+		{
+			"id": "stateSetter-button",
+			"type": "button",
+			"prps": {
+				"cpt": "set external state",
+				"fireScript": {
+					"actions": [
+						{
+							"type": "setState",
+							"target": "{{state.stateSetter-target.value}}",
+							"key": "{{state.stateSetter-key.value}}",
+							"value": "{{state.stateSetter-value.value}}"
+						}
+					]
+				}
+			}
+		}
+	]
+}

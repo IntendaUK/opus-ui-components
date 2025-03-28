@@ -13,7 +13,7 @@
                 "placeholder": "Enter the path of the dashboard you wish to open",
                 "position": "absolute",
                 "bottom": "100%",
-                "value": "flows"
+                "value": "datePicker"
             }
         },
         {

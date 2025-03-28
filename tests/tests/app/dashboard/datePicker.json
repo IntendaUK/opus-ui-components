@@ -1,0 +1,26 @@
+{
+	"type": "containerSimple",
+	"prps": {
+		"singlePage": true,
+		"padding": true,
+		"gap": "12px"
+	},
+	"wgts": [
+		{
+			"traits": [
+				"./shared/stateSetter"
+			]
+		},
+		{
+			"traits": [
+				"./shared/stateGetter"
+			]
+		},
+		{
+			"type": "datePicker",
+			"prps": {
+				"popoverZIndex": 2
+			}
+		}
+	]
+}

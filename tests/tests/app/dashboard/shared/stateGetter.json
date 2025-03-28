@@ -1,0 +1,43 @@
+{
+	"acceptPrps": {},
+	"type": "containerSimple",
+	"wgts": [
+		{
+			"id": "stateGetter-target",
+			"type": "input",
+			"prps": {
+				"placeholder": "target"
+			}
+		},
+		{
+			"id": "stateGetter-key",
+			"type": "input",
+			"prps": {
+				"placeholder": "key"
+			}
+		},
+		{
+			"id": "stateGetter-button",
+			"type": "button",
+			"prps": {
+				"cpt": "get external state",
+				"fireScript": {
+					"actions": [
+						{
+							"type": "setState",
+							"target": "stateGetter-value",
+							"value": "{{state.((state.stateGetter-target.value)).((state.stateGetter-key.value))}}"
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": "stateGetter-value",
+			"type": "input",
+			"prps": {
+				"placeholder": "value"
+			}
+		}
+	]
+}
