@@ -7,7 +7,7 @@ import '../helpers/setup';
 import { getRandomString } from '../helpers';
 import { testSteps } from '../helpers/awaitLocatorActions';
 
-test('Date Picker', async ({ page }) => {
+test('Date Picker', async () => {
 	await testSteps([
 		'type , datePicker , #inputViewportValue',
 		'ss , valueOverride , 1985/11/26 , datePicker/w/2',

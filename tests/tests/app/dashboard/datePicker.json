@@ -19,7 +19,8 @@
 		{
 			"type": "datePicker",
 			"prps": {
-				"popoverZIndex": 2
+				"popoverZIndex": 2,
+				"valueOverride": "1985/12/26"
 			}
 		}
 	]

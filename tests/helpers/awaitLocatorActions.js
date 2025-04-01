@@ -1,4 +1,4 @@
-/* eslint-disable max-len, max-lines */
+/* eslint-disable max-len, max-lines, max-lines-per-function */
 
 //System
 import { expect } from '@playwright/test';
@@ -80,7 +80,6 @@ export const valueEquals = async ({ locator, options: [expectedValue] }) => {
 	return el;
 };
 
-
 export const type = async ({ locator, options: [ valueToType ] }) => {
 	let el = await getEl(locator);
 
@@ -147,7 +146,7 @@ const notification = async ({ originalLocator: notificationType }) => {
 	await el.waitFor({ state: 'detached' });
 };
 
-const setState = async ({ locator, options: [ key, value ]}) => {
+const setState = async ({ locator, options: [ key, value ] }) => {
 	const el = await getEl(locator);
 
 	const id = await el.getAttribute('id');
@@ -160,7 +159,7 @@ const setState = async ({ locator, options: [ key, value ]}) => {
 	]);
 };
 
-const getState = async ({ locator, options: [ key, expectedValue ]}) => {
+const getState = async ({ locator, options: [ key, expectedValue ] }) => {
 	const el = await getEl(locator);
 
 	const id = await el.getAttribute('id');
@@ -199,7 +198,7 @@ export const chooseDatePickerDate = async ({ locator, options: [chooseDate] }) =
 		September: 9,
 		October: 10,
 		November: 11,
-		December: 12,
+		December: 12
 	};
 
 	// Get the month/year dropdown inside the popup
@@ -229,14 +228,13 @@ export const chooseDatePickerDate = async ({ locator, options: [chooseDate] }) =
 	}
 
 	// Once the month and year match, select the correct day
-	const dayLocator = datePickerPopup.locator(`.datesBox div`, { hasText: String(day) });
+	const dayLocator = datePickerPopup.locator('.datesBox .date', { hasText: String(day) });
 	await dayLocator.waitFor();
 	await dayLocator.click();
 
 	// Wait for the popup to disappear after selecting the date
 	await expect(datePickerPopup).toBeHidden();
 };
-
 
 //Internal
 const helperLookup = {
