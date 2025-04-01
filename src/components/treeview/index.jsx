@@ -1,5 +1,5 @@
 //React
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 //System
 import { createContext, ThemedComponent, DataLoaderHelper } from '@intenda/opus-ui';
@@ -32,7 +32,7 @@ const TreeviewInner = () => {
 
 export const Treeview = props => {
 	const { id, getHandler, classNames, style, attributes, state } = props;
-	const { data, expandedNodes } = state;
+	const { data, expandedNodes, mdaChildren } = state;
 	const { tToggleParent, tSetChildData, tRefreshNode, tRefreshParentNode } = state;
 
 	useEffect(getHandler(onProcessData), [JSON.stringify(data)]);
@@ -43,6 +43,8 @@ export const Treeview = props => {
 	useEffect(getHandler(onRefreshParentNode), [tRefreshParentNode]);
 	useEffect(getHandler(onSetChildData), [JSON.stringify(tSetChildData)]);
 
+	const TreeviewInnerMemo = useMemo(() => <TreeviewInner />, [JSON.stringify(mdaChildren)]);
+
 	return (
 		<TreeContext.Provider value={props}>
 			<div
@@ -52,7 +54,7 @@ export const Treeview = props => {
 				{...attributes}
 			>
 				<DataLoaderHelper ownerPrps={props} />
-				<TreeviewInner />
+				{TreeviewInnerMemo}
 			</div>
 		</TreeContext.Provider>
 	);
