@@ -1,5 +1,8 @@
 /* eslint-disable max-lines-per-function */
 
+//System Helpers
+import { spliceWhere } from '@intenda/opus-ui';
+
 //Helpers
 import recurseFindNode from '../helpers/recurseFindNode';
 
@@ -27,7 +30,7 @@ const onSetChildData = props => {
 
 		newState[childKey] = children;
 
-		children.spliceWhere(f => f[dtaAtr] === t[dtaAtr]);
+		spliceWhere(children, f => f[dtaAtr] === t[dtaAtr]);
 		children.push(t);
 
 		const childChildren = state[`childData-${t[dtaAtr]}`];

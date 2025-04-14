@@ -1,5 +1,5 @@
 //System Helpers
-import { clone, runScript } from '@intenda/opus-ui';
+import { runScript, clone, spliceWhere } from '@intenda/opus-ui';
 
 //External Helpers
 import { generateWrapperMda } from '../../repeater/helpers';
@@ -17,7 +17,7 @@ const onToggleParent = props => {
 
 	const expanded = expandedNodes.some(e => e === tToggleParent[dtaAtr]);
 	if (expanded)
-		expandedNodes.spliceWhere(e => e === tToggleParent[dtaAtr]);
+		spliceWhere(expandedNodes, e => e === tToggleParent[dtaAtr]);
 	else
 		expandedNodes.push(tToggleParent[dtaAtr]);
 

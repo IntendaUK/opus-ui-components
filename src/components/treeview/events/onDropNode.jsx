@@ -1,5 +1,8 @@
 /* eslint-disable max-lines-per-function */
 
+//System Helpers
+import { spliceWhere } from '@intenda/opus-ui';
+
 //Helpers
 import recurseFindNode from '../helpers/recurseFindNode';
 import buildNodeId from '../helpers/buildNodeId';
@@ -43,7 +46,7 @@ const onDropNode = (props, a) => {
 
 	if (moveOnDrop && oldOwner) {
 		//Remove from previous owner
-		oldOwner[childAtr].spliceWhere(c => c[dtaAtr] === node[dtaAtr]);
+		spliceWhere(oldOwner[childAtr], c => c[dtaAtr] === node[dtaAtr]);
 
 		if (!oldOwner[childAtr].length) {
 			delete oldOwner[childAtr];
