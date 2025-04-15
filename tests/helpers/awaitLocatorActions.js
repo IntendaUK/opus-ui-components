@@ -267,7 +267,7 @@ const transformLocator = locator => {
 		const testId = locator.substring(1, indexClosingBrace);
 
 		locator = `[data-testid="${testId}"] ${locator.substr(indexClosingBrace + 1)}`;
-	} else if (locator[0] !== '#' && locator[0] !== '.')
+	} else if (!['#', '[', '.'].includes(locator[0]))
 		locator = `[data-testid="${locator}"]`;
 
 	return locator;

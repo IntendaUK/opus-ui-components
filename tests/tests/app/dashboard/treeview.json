@@ -1,0 +1,117 @@
+{
+	"type": "containerSimple",
+	"prps": {
+		"singlePage": true,
+		"padding": true,
+		"gap": "12px"
+	},
+	"wgts": [
+		{
+			"scope": "treeview",
+			"type": "treeview",
+			"prps": {
+				"dtaAtr": "id",
+				"disAtr": "name",
+				"childAtr": "children",
+				"staticData": [
+					{
+						"id": "r1",
+						"name": "Tree Root",
+						"isRoot": true,
+						"children": [
+							{
+								"id": "t1",
+								"name": "Things",
+								"children": [
+									{
+										"id": "d1",
+										"name": "Door"
+									},
+									{
+										"id": "f1",
+										"name": "Floor"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"scope": "treeview",
+			"type": "treeview",
+			"prps": {
+				"width": "400px",
+				"dtaAtr": "id",
+				"disAtr": "name",
+				"childAtr": "children",
+				"staticData": [
+					{
+						"id": "r2",
+						"name": "Tree Root",
+						"isRoot": true,
+						"children": [
+							{
+								"id": "things",
+								"name": "Things",
+								"children": [
+									{
+										"id": "d2",
+										"name": "Door"
+									},
+									{
+										"id": "f2",
+										"name": "Floor"
+									}
+								]
+							}
+						]
+					}
+				],
+				"mdaExpander": {
+					"id": "((rowData.id))expander",
+					"type": "button",
+					"prps": {
+						"cpt": "(>)",
+						"fireScript": {
+							"actions": [
+								{
+									"type": "setState",
+									"target": "||treeview||",
+									"key": "tToggleParent",
+									"value": "{{rowData}}"
+								}
+							]
+						}
+					}
+				},
+				"mdaLabel": {
+					"id": "((rowData.id))label",
+					"type": "container",
+					"prps": {
+						"canClick": true,
+						"fireScript": {
+							"actions": [
+								{
+									"type": "setState",
+									"target": "||treeview||",
+									"key": "value",
+									"value": "{{rowData}}"
+								}
+							]
+						}
+					},
+					"wgts": [
+						{
+							"type": "label",
+							"prps": {
+								"cpt": "((rowData.name))"
+							}
+						}
+					]
+				}
+			}
+		}
+	]
+}
