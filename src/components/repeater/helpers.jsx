@@ -169,6 +169,14 @@ const generateValuesObject = ({ id: parentId }, rowData, wgtMda, rowNumber) => {
 	};
 };
 
+const recurseFixChildTestIds = (obj, parentOldTestId, parentNewTestId) => {
+	if (obj.wgts)
+		obj.wgts.forEach(w => recurseFixChildTestIds(w, parentOldTestId, parentNewTestId));
+
+	const currentTestId = obj.prps['data-testid'];
+	obj.prps['data-testid'] = currentTestId.replaceAll(parentOldTestId, parentNewTestId);
+};
+
 export const generateWrapperMda = (props, data, rowNumber, wgtMda, lastParentHoverId) => {
 	const rowData = data[rowNumber];
 
@@ -176,6 +184,10 @@ export const generateWrapperMda = (props, data, rowNumber, wgtMda, lastParentHov
 
 	if (rowPrps.ignoreForLastRow && rowNumber === data.length - 1)
 		return null;
+
+	//isRowMda tells us whether we're on the outer component.
+	// That is, the main rowMda: { } component, not some child inside it.
+	const isRowMda = wgtMda === props.state.rowMda;
 
 	const wrapperMda = clone({}, wgtMda);
 
@@ -185,6 +197,11 @@ export const generateWrapperMda = (props, data, rowNumber, wgtMda, lastParentHov
 
 	clone(wrapperMda, generateWrapperProps(rowData, wgtMda, rowNumber, valuesObj, rowMdaScope));
 
+	const oldTestId = wrapperMda.prps?.['data-testid'];
+
+	if (isRowMda && oldTestId)
+		wrapperMda.prps['data-testid'] += `/${rowNumber}`;
+
 	if (wrapperMda?.prps?.canHover)
 		lastParentHoverId = wrapperMda.id;
 
@@ -192,6 +209,13 @@ export const generateWrapperMda = (props, data, rowNumber, wgtMda, lastParentHov
 		wrapperMda.wgts = wgts
 			.map(childMda => generateWrapperMda(props, data, rowNumber, childMda, lastParentHoverId))
 			.filter(c => !!c);
+	}
+
+	//Fix all testId's for children recursively
+	if (isRowMda && oldTestId && wgts) {
+		const newTestId = wrapperMda.prps['data-testid'];
+
+		wrapperMda.wgts.forEach(w => recurseFixChildTestIds(w, oldTestId, newTestId));
 	}
 
 	if (hoverPrps) {
