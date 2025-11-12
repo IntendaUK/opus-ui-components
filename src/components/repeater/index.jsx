@@ -13,23 +13,6 @@ import { List } from 'react-window';
 //Context
 const RepeaterContext = createContext('repeaterContext');
 
-//Helpers
-const buildVirtualizedChildData = (ChildWgt, childMda) => {
-	if (!childMda)
-		return;
-
-	const itemData = childMda.map(c => {
-		const key = c.relId || c.id;
-
-		return {
-			key,
-			el: <ChildWgt key={key} mda={c} />
-		};
-	});
-
-	return itemData;
-};
-
 //Events
 const onMount = props => {
 	const { setState, state: { rowMda, data, childMda: existingChildMda } } = props;
@@ -80,7 +63,7 @@ const VirtualizedOuter = forwardRef((p, ref) => {
 });
 
 const VirtualizedInner = () => {
-	const { id, state } = useContext(RepeaterContext);
+	const { id, ChildWgt, state } = useContext(RepeaterContext);
 	const { childMda, width, height } = state;
 	const { prpsVirtualizedContainer = {}, virtualizedDirection, virtualizedItemSize } = state;
 
