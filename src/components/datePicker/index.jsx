@@ -61,6 +61,22 @@ const DaysBar = () => {
 	);
 };
 
+const ExtraWgts = () => {
+	const { id, ChildWgt, state: { mdaExtraContainer } } = useContext(DatePickerContext);
+
+	if (!mdaExtraContainer)
+		return;
+
+	const key = mdaExtraContainer.id ?? `${id}-mdaExtraContainer`;
+
+	return (
+		<ChildWgt
+			key={key}
+			mda={mdaExtraContainer}
+		/>
+	);
+};
+
 const Calendar = () => {
 	return (
 		<div className='calendar'>
@@ -70,6 +86,7 @@ const Calendar = () => {
 			</div>
 			<DaysBar />
 			<DatesBox />
+			<ExtraWgts />
 		</div>
 	);
 };

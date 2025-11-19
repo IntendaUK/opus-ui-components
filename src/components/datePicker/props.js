@@ -357,6 +357,11 @@ const props = {
 	closePopupOnClickSelectedDate: {
 		type: 'boolean',
 		desc: 'When set to true, closes the date picker popup when clicking on the currently selected date'
+	},
+
+	mdaExtraContainer: {
+		type: 'object',
+		desc: 'An extra component to be rendered within the Calendar popup'
 	}
 };
 

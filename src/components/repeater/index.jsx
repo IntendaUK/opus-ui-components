@@ -8,24 +8,42 @@ import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
 import { generateWrapperMda } from './helpers';
 
 //Plugins
-import { List } from 'react-window';
+import { FixedSizeList as List } from 'react-window';
 
 //Context
 const RepeaterContext = createContext('repeaterContext');
 
+//Helpers
+const buildVirtualizedChildData = ({ ChildWgt, state: { childMda } }) => {
+	if (!childMda)
+		return;
+
+	const itemData = childMda.map(c => {
+		const key = c.relId || c.id;
+
+		return {
+			key,
+			el: <ChildWgt key={key} mda={c} />
+		};
+	});
+
+	return itemData;
+};
+
 //Events
 const onMount = props => {
-	const { setState, state: { rowMda, data, childMda: existingChildMda } } = props;
+	const { setState, state: { rowMda, data } } = props;
 
 	if (!data)
 		return;
 
-	const newChildMda = data.map((rowData, i) =>
-		generateWrapperMda(props, data, i, rowMda)
-	);
+	const childMda = data.map((rowData, i) => {
+		const wgtMda = generateWrapperMda(props, data, i, rowMda);
 
-	if (JSON.stringify(newChildMda) !== JSON.stringify(existingChildMda))
-		setState({ childMda: newChildMda });
+		return wgtMda;
+	});
+
+	setState({ childMda });
 };
 
 //Components
@@ -47,7 +65,7 @@ const RepeaterInner = () => {
 	return result;
 };
 
-const VirtualizedOuter = forwardRef((p, ref) => {
+const VirtualizedOuter = (p, ref) => {
 	const { id, state: { invisibleScrollbars } } = useContext(RepeaterContext);
 
 	const className = invisibleScrollbars ? 'invisibleScrollbars' : '';
@@ -60,58 +78,54 @@ const VirtualizedOuter = forwardRef((p, ref) => {
 			className={className}
 		/>
 	);
-});
+};
+
+const VirtualizedItem = ({ index, style, data }) => (
+	<div style={style} id={data[index].key + 'outer'}>
+		{data[index].el}
+	</div>
+);
 
 const VirtualizedInner = () => {
-	const { id, ChildWgt, state } = useContext(RepeaterContext);
-	const { childMda, width, height } = state;
-	const { prpsVirtualizedContainer = {}, virtualizedDirection, virtualizedItemSize } = state;
+	const { id, getHandler, state } = useContext(RepeaterContext);
+	const { childMda, width, height, prpsVirtualizedContainer } = state;
+	const { virtualizedDirection, virtualizedItemSize } = state;
+
+	const itemData = useMemo(getHandler(buildVirtualizedChildData), [childMda]);
+
+	const outer = useMemo(() => forwardRef(VirtualizedOuter), []);
+	const inner = useCallback(VirtualizedItem, []);
 
 	if (!childMda)
 		return null;
 
-	const rows = useMemo(
-		() =>
-			childMda.map(c => ({
-				key: c.relId || c.id,
-				el: <ChildWgt key={c.relId || c.id} mda={c} />
-			})),
-		[ChildWgt, childMda]
-	);
-
-	const rowComponent = useCallback(
-		({ index, style }) => (
-			<div style={style} id={`${rows[index].key}-outer`}>
-				{rows[index].el}
-			</div>
-		),
-		[rows]
-	);
-
-	const listProps = {
+	const listPrps = {
 		id,
-		rowComponent,
-		rowCount: rows.length,
-		rowHeight: virtualizedItemSize,
-		rowProps: {},
-		direction: virtualizedDirection,
-		style: {
-			width: parseInt(width || '0', 10) || undefined,
-			height: parseInt(height || '0', 10) || undefined
-		},
-		tagName: VirtualizedOuter,
+		itemCount: childMda.length,
+		itemSize: virtualizedItemSize,
+		layout: virtualizedDirection,
+		itemData,
+		outerElementType: outer,
 		...prpsVirtualizedContainer
 	};
 
-	return <List {...listProps} />;
+	if (width)
+		listPrps.width = +((width + '').replace('px', ''));
+	if (height)
+		listPrps.height = +((height + '').replace('px', ''));
+
+	return (
+		<List {...listPrps}>
+			{inner}
+		</List>
+	);
 };
 
+//Export
 export const Repeater = props => {
 	const { getHandler, state: { data, virtualized } } = props;
 
-	useEffect(() => {
-		getHandler(onMount)();
-	}, [data]);
+	useEffect(getHandler(onMount), [JSON.stringify(data)]);
 
 	const Inner = virtualized ? VirtualizedInner : RepeaterInner;
 

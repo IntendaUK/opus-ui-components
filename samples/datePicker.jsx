@@ -21,10 +21,32 @@ root.render(
 				crossAxisAlign: 'center'
 			},
 			wgts: [{
+				scope: 'datePicker',
 				type: 'datePicker',
 				prps: {
-					popoverZIndex: 1,
-					closePopupOnClickSelectedDate: true
+					popoverZIndex: 2,
+					closePopupOnClickSelectedDate: true,
+					mdaExtraContainer: {
+						type: 'container',
+						prps: {
+							marginTop: '15px',
+							canClick: true,
+							fireScript: {
+								actions: [{
+									type: 'setState',
+									target: '||datePicker||',
+									key: 'active',
+									value: false
+								}]
+							}
+						},
+						wgts: [{
+							type: 'label',
+							prps: {
+								cpt: 'Click me'
+							}
+						}]
+					}
 				}
 			}]
 		}}
