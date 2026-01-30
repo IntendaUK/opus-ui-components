@@ -29,7 +29,7 @@
 	"dependencies": {
 		"@mona-health/react-input-mask": "3.0.3",
 		"keen-slider": "^6.8.6",
-		"material-icons": "^1.13.14",
+		"material-symbols": "^0.40.2",
 		"rc-slider": "^11.1.8",
 		"react-markdown": "^10.1.0",
 		"react-number-format": "^5.4.3",
@@ -45,15 +45,15 @@
 		"@types/react-dom": "^19.0.4",
 		"@vitejs/plugin-react": "^4.3.4",
 		"babel-plugin-react-compiler": "^19.0.0-beta-aeaed83-20250323",
+		"concurrently": "^9.1.2",
 		"eslint": "^9.23.0",
 		"eslint-plugin-react": "^7.37.4",
 		"eslint-plugin-react-compiler": "^19.0.0-beta-aeaed83-20250323",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.19",
+		"nodemon": "^3.1.9",
 		"vite": "^6.2.3",
-		"vite-plugin-libcss": "^1.1.1",
-		"concurrently": "^9.1.2",
-		"nodemon": "^3.1.9"
+		"vite-plugin-libcss": "^1.1.1"
 	},
 	"peerDependencies": {
 		"@intenda/opus-ui": ">=2.0.0 < 3.0.0",
