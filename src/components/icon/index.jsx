@@ -6,17 +6,16 @@ import { createContext, PopoverOwnEvents } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';
-import 'material-icons/iconfont/material-icons.css';
+import 'material-symbols';
 
 const IconContext = createContext('iconContext');
 
 //Internal
 const iconClassNameMap = {
-	filled: 'material-icons',
-	outlined: 'material-icons-outlined',
-	rounded: 'material-icons-round',
-	sharp: 'material-icons-sharp',
-	twoTone: 'material-icons-two-tone'
+	outlined: 'material-symbols-outlined',
+	rounded: 'material-symbols-rounded',
+	sharp: 'material-symbols-sharp',
+	twoTone: 'material-symbols-two-tone'
 };
 
 //Components
@@ -38,29 +37,34 @@ export const Icon = props => {
 	const { id, style, attributes, classNames: classNamesBase, state } = props;
 	const { value, handlerOnClick, title, iconStyle } = state;
 
-	const classNames = `${classNamesBase} material-icons`;
+	const iconClassName = iconClassNameMap[iconStyle] ?? 'material-symbols-outlined';
 
-	const popoverEvents = {};
-	if (handlerOnClick)
-		popoverEvents.onClick = handlerOnClick;
-
-	const iconClassName = iconClassNameMap[iconStyle];
+	const spanStyle = {};
+	if (iconStyle === 'filled')
+		spanStyle.fontVariationSettings = `'FILL' 1`;
 
 	return (
 		<IconContext.Provider value={props}>
 			<div
 				id={id}
-				className={classNames}
+				className={classNamesBase}
 				style={style}
 				{...attributes}
 				title={title}
 				onClick={handlerOnClick}
 			>
-				<PopoverOwnEvents props={props} ownerEvents={popoverEvents} />
-				<span className={iconClassName}>{value}</span>
+				<PopoverOwnEvents
+					props={props}
+					ownerEvents={handlerOnClick ? { onClick: handlerOnClick } : {}}
+				/>
+
+				<span className={iconClassName} style={spanStyle}>
+					{value}
+				</span>
+
 				<Badge />
 			</div>
 		</IconContext.Provider>
-
 	);
 };
+
