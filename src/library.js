@@ -65,9 +65,6 @@ import propsUrl from './components/url/props';
 import propsVideoPlayer from './components/videoPlayer/props';
 import propsWebSocket from './components/webSocket/props';
 
-//Styles
-import 'material-symbols';
-
 //Script Actions
 import showNotification from './scriptActions/showNotification';
 
