@@ -13,7 +13,6 @@ import { DatePicker } from './components/datePicker';
 import { Divider } from './components/divider';
 import { FocusLine } from './components/focusLine';
 import { Html } from './components/html';
-import { Icon } from './components/icon';
 import { Image } from './components/image';
 import { Input } from './components/input';
 import { Label } from './components/label';
@@ -46,7 +45,6 @@ import propsDatePicker from './components/datePicker/props';
 import propsDivider from './components/divider/props';
 import propsFocusLine from './components/focusLine/props';
 import propsHtml from './components/html/props';
-import propsIcon from './components/icon/props';
 import propsImage from './components/image/props';
 import propsInput from './components/input/props';
 import propsLabel from './components/label/props';
@@ -137,11 +135,6 @@ registerComponentTypes([{
 	type: 'html',
 	component: Html,
 	propSpec: propsHtml
-},
-{
-	type: 'icon',
-	component: Icon,
-	propSpec: propsIcon
 },
 {
 	type: 'image',

@@ -1,6 +1,6 @@
 {
 	"name": "@intenda/opus-ui-components",
-	"version": "2.4.1",
+	"version": "3.0.0",
 	"type": "module",
 	"homepage": "https://opus-ui.com",
 	"files": [
@@ -29,7 +29,6 @@
 	"dependencies": {
 		"@mona-health/react-input-mask": "3.0.3",
 		"keen-slider": "^6.8.6",
-		"material-symbols": "^0.40.2",
 		"rc-slider": "^11.1.8",
 		"react-markdown": "^10.1.0",
 		"react-number-format": "^5.4.3",
