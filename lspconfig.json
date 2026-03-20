@@ -45,6 +45,10 @@
 			"path": "dist/components/html"
 		},
 		{
+			"name": "icon",
+			"path": "dist/components/icon"
+		},
+		{
 			"name": "image",
 			"path": "dist/components/image"
 		},

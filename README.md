@@ -14,6 +14,7 @@ datePicker
 divider
 focusLine
 html
+icon
 image
 input
 label

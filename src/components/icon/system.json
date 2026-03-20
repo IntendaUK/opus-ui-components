@@ -1,0 +1,16 @@
+{
+    "propSpecConfig": {
+        "path": "dist/components/icon/props.js",
+        "functions": [
+            {
+                "key": "mapToColor",
+                "path": "dist/props/cssMaps/mapToColor.js"
+            },
+            {
+                "key": "mapToSize",
+                "path": "dist/props/cssMaps/mapToSize.js"
+            }
+        ],
+        "dependents": []
+    }
+}

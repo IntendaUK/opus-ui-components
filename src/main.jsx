@@ -19,11 +19,9 @@ createRoot(document.getElementById('root'))
 					gap: '24px'
 				},
 				wgts: [{
-					type: 'label',
+					type: 'icon',
 					prps: {
-						cpt: '@intenda/opus-ui-components',
-						fontSize: '32px',
-						color: '#222'
+						value: 'face'
 					}
 				}, {
 					type: 'label',
