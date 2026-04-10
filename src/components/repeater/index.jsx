@@ -21,6 +21,14 @@ const buildVirtualizedChildData = ({ ChildWgt, state: { childMda } }) => {
 	const itemData = childMda.map(c => {
 		const key = c.relId || c.id;
 
+		if (typeof(c.type) === 'function') {
+			const { type: Type, ...rest } = c;
+
+			return (
+				<Type key={key } {...rest} />
+			);
+		}
+
 		return {
 			key,
 			el: <ChildWgt key={key} mda={c} />
@@ -46,6 +54,38 @@ const onMount = props => {
 	setState({ childMda });
 };
 
+const renderOpusNode = (c, key = undefined) => {
+	if (!c)
+		return null;
+
+	const { type: Type, wgts, ...rest } = c;
+
+	let childWgts = null;
+
+	if (Array.isArray(wgts) && wgts.length > 0) {
+		childWgts = wgts.map((child, i) => {
+			const childKey = child.relId || child.id;
+
+			return renderOpusNode(child, childKey);
+		});
+	}
+
+	// If the component has children, pass them as JSX children.
+	// This keeps the render signature simple and works with standard React components.
+	if (childWgts) {
+		return (
+			<Type key={key} {...rest}>
+				{childWgts}
+			</Type>
+		);
+	}
+
+	// No children
+	return (
+		<Type key={key} {...rest} />
+	);
+};
+
 //Components
 const RepeaterInner = () => {
 	const props = useContext(RepeaterContext);
@@ -56,6 +96,12 @@ const RepeaterInner = () => {
 
 	const result = childMda.map(c => {
 		const key = c.relId || c.id;
+
+		if (typeof(c.type) === 'function') {
+			const res = renderOpusNode(c, key);
+
+			return res;
+		}
 
 		return (
 			<ChildWgt key={key} mda={c} />
