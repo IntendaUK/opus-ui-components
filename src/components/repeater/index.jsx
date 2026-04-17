@@ -54,7 +54,7 @@ const onMount = props => {
 	setState({ childMda });
 };
 
-const renderOpusNode = (c, key = undefined) => {
+const renderOpusNodeOld = (c, key = undefined) => {
 	if (!c)
 		return null;
 
@@ -86,10 +86,76 @@ const renderOpusNode = (c, key = undefined) => {
 	);
 };
 
+const isOpusNode = value => {
+	return (
+		value &&
+		typeof value === 'object' &&
+		typeof value.type === 'function'
+	);
+};
+
+const transformValue = (value, key = undefined) => {
+	//If a repeater row also contains a repeater, don't mess with its rowMda
+	if (value == null || key === 'rowMda')
+		return value;
+
+	if (Array.isArray(value)) {
+		return value.map((item, i) => {
+			return transformValue(item, i);
+		});
+	}
+
+	if (isOpusNode(value))
+		return renderOpusNode(value, key);
+
+	if (typeof value === 'object') {
+		const result = {};
+
+		Object.keys(value).forEach(propKey => {
+			result[propKey] = transformValue(value[propKey], propKey);
+		});
+
+		return result;
+	}
+
+	return value;
+};
+
+const renderOpusNode = (node, key = undefined) => {
+	if (!node)
+		return null;
+
+	const { type: Type, wgts, ...rest } = node;
+
+	const transformedRest = transformValue(rest);
+
+	let children = null;
+
+	if (Array.isArray(wgts) && wgts.length > 0) {
+		children = wgts.map((child, i) => {
+			const childKey = child.relId || child.id || i;
+
+			return renderOpusNode(child, childKey);
+		});
+	}
+
+	if (children) {
+		return (
+			<Type key={key} {...transformedRest}>
+				{children}
+			</Type>
+		);
+	}
+
+	return (
+		<Type key={key} {...transformedRest} />
+	);
+};
+
 //Components
 const RepeaterInner = () => {
 	const props = useContext(RepeaterContext);
-	const { ChildWgt, state: { childMda } } = props;
+	const { ChildWgt, state: { x, childMda } } = props;
 
 	if (!childMda)
 		return null;
