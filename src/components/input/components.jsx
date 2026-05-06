@@ -35,7 +35,7 @@ const RegularInput = () => {
 
 	useEffect(onWheelPassive.bind(null, scrollRef, isNumber), []);
 
-	const inputProps = buildInputProps(props, scrollRef, isNumber);
+	const inputProps = buildInputProps(props, scrollRef, isNumber, true);
 
 	return <input {...inputProps} />;
 };

@@ -45,7 +45,31 @@ const valueExists = value => {
 	return value !== undefined && value !== null;
 };
 
-export const buildInputProps = (props, scrollRef, isNumber) => {
+const getAttrsInputProps = state => {
+	const { attrsInput } = state;
+
+	if (!attrsInput)
+		return {};
+
+	return attrsInput.reduce((result, attrItem) => {
+		let key;
+		let attr;
+
+		if (typeof attrItem === 'string') {
+			key = attrItem;
+			attr = attrItem;
+		} else {
+			key = attrItem.key;
+			attr = attrItem.attr;
+		}
+
+		result[attr] = state[key];
+
+		return result;
+	}, {});
+};
+
+export const buildInputProps = (props, scrollRef, isNumber, includeAttrsInput) => {
 	const { getHandler, state } = props;
 	const { dataType, placeholder, hasFocus, displayKey } = state;
 
@@ -69,6 +93,9 @@ export const buildInputProps = (props, scrollRef, isNumber) => {
 
 	if (valueExists(value))
 		inputProps.value = value;
+
+	if (includeAttrsInput)
+		Object.assign(inputProps, getAttrsInputProps(state));
 
 	const specialProps = getSpecialProps(props, scrollRef, isNumber);
 	Object.assign(inputProps, specialProps);

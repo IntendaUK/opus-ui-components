@@ -20,6 +20,10 @@ const props = {
 		desc: 'A HTML input or Textarea component\'s data type',
 		classMap: val => `type-${val}`
 	},
+	attrsInput: {
+		type: 'array',
+		desc: 'A list of state properties that should be attached as attributes to the rendered regular input element'
+	},
 	canSelectMultipleFiles: {
 		type: 'boolean',
 		desc: 'When the dataType is set to "file" and this property is set to true, multiple files can be selected'
