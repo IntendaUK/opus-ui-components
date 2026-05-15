@@ -95,7 +95,16 @@ root.render(
 			input({
 				cpt: 'Notes',
 				multiline: true,
-				value: 'This variant uses a textarea.\nIt intentionally does not receive attrsInput.',
+				value: 'This variant uses a textarea.\nIt also receives attrsInput.',
+				dataTest: 'textarea-attrs-sample',
+				ariaLabelValue: 'Notes with injected aria label',
+				attrsInput: [{
+					key: 'dataTest',
+					attr: 'data-test'
+				}, {
+					key: 'ariaLabelValue',
+					attr: 'aria-label'
+				}],
 				height: '150px'
 			}),
 			heading('Regular input with attrsInput'),

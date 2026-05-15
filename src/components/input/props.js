@@ -22,7 +22,7 @@ const props = {
 	},
 	attrsInput: {
 		type: 'array',
-		desc: 'A list of state properties that should be attached as attributes to the rendered regular input element'
+		desc: 'A list of state properties that should be attached as attributes to the rendered input element'
 	},
 	canSelectMultipleFiles: {
 		type: 'boolean',

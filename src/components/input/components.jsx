@@ -20,7 +20,7 @@ const InputContext = createContext('input');
 
 const MultilineInput = () => {
 	const props = useContext(InputContext);
-	const inputProps = buildInputProps(props);
+	const inputProps = buildInputProps(props, undefined, false, true);
 
 	return <textarea {...inputProps} />;
 };
