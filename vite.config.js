@@ -123,7 +123,7 @@ export default defineConfig(async () => {
 				formats: ['es'],
 				fileName: () => 'lib.js'
 			},
-			rollupOptions: { external: [...Object.keys(packageJson.peerDependencies)] }
+			rollupOptions: { external: [...Object.keys(packageJson.peerDependencies), 'react/jsx-runtime', '@floating-ui/react'] }
 		},
 		optimizeDeps: { esbuildOptions: { loader: { '.js': 'jsx' } } },
 		resolve: { alias: monorepoAliases },

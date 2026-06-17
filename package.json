@@ -1,6 +1,6 @@
 {
 	"name": "@intenda/opus-ui-components",
-	"version": "2.11.1",
+	"version": "3.0.0",
 	"type": "module",
 	"homepage": "https://opus-ui.com",
 	"files": [
@@ -43,20 +43,21 @@
 		"@types/node": "^22.13.14",
 		"@types/react": "^19.0.12",
 		"@types/react-dom": "^19.0.4",
-		"@vitejs/plugin-react": "^4.3.4",
-		"babel-plugin-react-compiler": "^19.0.0-beta-aeaed83-20250323",
+		"@vitejs/plugin-react": "^6.0.2",
+		"babel-plugin-react-compiler": "^1.0.0",
+		"concurrently": "^9.1.2",
 		"eslint": "^9.23.0",
 		"eslint-plugin-react": "^7.37.4",
 		"eslint-plugin-react-compiler": "^19.0.0-beta-aeaed83-20250323",
 		"eslint-plugin-react-hooks": "^5.2.0",
 		"eslint-plugin-react-refresh": "^0.4.19",
-		"vite": "^6.2.3",
+		"nodemon": "^3.1.9",
+		"vite": "^8.0.16",
 		"vite-plugin-libcss": "^1.1.1",
-		"concurrently": "^9.1.2",
-		"nodemon": "^3.1.9"
+		"@rolldown/plugin-babel": "^0.2.3"
 	},
 	"peerDependencies": {
-		"@intenda/opus-ui": ">=2.0.0 < 3.0.0",
+		"@intenda/opus-ui": ">=3.0.0 < 4.0.0",
 		"react": ">=19.0.0 < 20.0.0",
 		"react-dom": ">=19.0.0 < 20.0.0"
 	},
@@ -65,5 +66,8 @@
 	},
 	"optionalDependencies": {
 		"@rollup/rollup-linux-x64-gnu": "^4.36.0"
+	},
+	"overrides": {
+		"shell-quote": "^1.8.4"
 	}
 }
