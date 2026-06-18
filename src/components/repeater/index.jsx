@@ -1,5 +1,5 @@
 //React
-import React, { useContext, useEffect, useMemo, forwardRef, useCallback } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 
 //System
 import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
@@ -8,7 +8,7 @@ import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
 import { generateWrapperMda } from './helpers';
 
 //Plugins
-import { FixedSizeList as List } from 'react-window';
+import { List } from 'react-window';
 
 //Context
 const RepeaterContext = createContext('repeaterContext');
@@ -65,22 +65,8 @@ const RepeaterInner = () => {
 	return result;
 };
 
-const VirtualizedOuter = (p, ref) => {
-	const { id, state: { invisibleScrollbars } } = useContext(RepeaterContext);
-
-	const className = invisibleScrollbars ? 'invisibleScrollbars' : '';
-
-	return (
-		<div
-			id={id}
-			ref={ref}
-			{...p}
-			className={className}
-		/>
-	);
-};
-
-const VirtualizedItem = ({ index, style, data }) => (
+// react-window v2 row component: receives { index, style, ...rowProps }.
+const VirtualizedRow = ({ index, style, data }) => (
 	<div style={style} id={data[index].key + 'outer'}>
 		{data[index].el}
 	</div>
@@ -88,37 +74,36 @@ const VirtualizedItem = ({ index, style, data }) => (
 
 const VirtualizedInner = () => {
 	const { id, getHandler, state } = useContext(RepeaterContext);
-	const { childMda, width, height, prpsVirtualizedContainer } = state;
-	const { virtualizedDirection, virtualizedItemSize } = state;
+	const { childMda, width, height, invisibleScrollbars, virtualizedItemSize, prpsVirtualizedContainer } = state;
 
 	const itemData = useMemo(getHandler(buildVirtualizedChildData), [childMda]);
-
-	const outer = useMemo(() => forwardRef(VirtualizedOuter), []);
-	const inner = useCallback(VirtualizedItem, []);
 
 	if (!childMda)
 		return null;
 
+	const style = {};
+	const heightPx = height ? +((height + '').replace('px', '')) : undefined;
+
+	if (width)
+		style.width = +((width + '').replace('px', ''));
+	if (heightPx)
+		style.height = heightPx;
+
 	const listPrps = {
 		id,
-		itemCount: childMda.length,
-		itemSize: virtualizedItemSize,
-		layout: virtualizedDirection,
-		itemData,
-		outerElementType: outer,
+		className: invisibleScrollbars ? 'invisibleScrollbars' : '',
+		style,
+		rowComponent: VirtualizedRow,
+		rowCount: childMda.length,
+		rowHeight: virtualizedItemSize,
+		rowProps: { data: itemData },
 		...prpsVirtualizedContainer
 	};
 
-	if (width)
-		listPrps.width = +((width + '').replace('px', ''));
-	if (height)
-		listPrps.height = +((height + '').replace('px', ''));
+	if (heightPx)
+		listPrps.defaultHeight = heightPx;
 
-	return (
-		<List {...listPrps}>
-			{inner}
-		</List>
-	);
+	return <List {...listPrps} />;
 };
 
 //Export

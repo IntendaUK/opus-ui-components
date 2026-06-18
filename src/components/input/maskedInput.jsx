@@ -10,8 +10,8 @@ import { onMaskedInputChange } from './events';
 //Helpers
 import { buildInputProps } from './helpers';
 
-//Plugins
-import InputMask from '@mona-health/react-input-mask';
+//Components
+import InputMask from './maskInput';
 
 const InputContext = createContext('input');
 

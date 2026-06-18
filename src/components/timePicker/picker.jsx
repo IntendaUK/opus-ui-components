@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 //System
 import { createContext } from '@intenda/opus-ui';
 
-import { useKeenSlider } from 'keen-slider/react';
+import { useKeenSlider } from 'keen-slider/react.es.js';
 import 'keen-slider/keen-slider.min.css';
 
 //Context

@@ -8,7 +8,6 @@ import { createContext, Popover } from '@intenda/opus-ui';
 
 //Styles
 import './styles.css';
-import 'rc-slider/assets/index.css';
 
 //Components
 import { SliderInner } from './components';

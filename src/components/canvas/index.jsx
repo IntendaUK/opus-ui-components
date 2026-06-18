@@ -7,8 +7,8 @@ import { createContext, resolveThemeAccessor } from '@intenda/opus-ui';
 //Styles
 import './styles.css';
 
-//Plugins
-import SignatureCanvas from 'react-signature-canvas';
+//Components
+import SignatureCanvas from './signaturePad';
 
 //Context
 const CanvasContext = createContext('canvas');

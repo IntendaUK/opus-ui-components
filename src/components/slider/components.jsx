@@ -1,5 +1,5 @@
 //React
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 //System
 import { createContext, useEffectSkipFirst } from '@intenda/opus-ui';
@@ -7,8 +7,8 @@ import { createContext, useEffectSkipFirst } from '@intenda/opus-ui';
 //Events
 import { onAfterChange, onCallHandler, onChange, onValueManuallySet } from './events';
 
-//Plugins
-import RCSlider from 'rc-slider';
+//Components
+import Slider from './sliderControl';
 
 //Context
 const SliderContext = createContext('slider');
@@ -27,11 +27,7 @@ const getDiscreteIntervals = (intervals, min, max) => {
 export const SliderWithTooltip = props => {
 	const { state: { tooltipPosition } } = useContext(SliderContext);
 
-	const RCSliderWithTooltip = useMemo(() => RCSlider.createSliderWithTooltip(RCSlider), []);
-
-	const tooltipPrps = { placement: tooltipPosition };
-
-	return <RCSliderWithTooltip tipProps={tooltipPrps} {...props} />;
+	return <Slider tooltip tooltipPlacement={tooltipPosition} {...props} />;
 };
 
 export const SliderInner = () => {
@@ -59,7 +55,7 @@ export const SliderInner = () => {
 
 	sliderProps.marks = isDiscrete ? getDiscreteIntervals(interval, min, max) : {};
 
-	const CustomSlider = hasTooltip ? SliderWithTooltip : RCSlider;
+	const CustomSlider = hasTooltip ? SliderWithTooltip : Slider;
 
 	return <CustomSlider {...sliderProps} />;
 };
