@@ -2,6 +2,9 @@
 import { registerComponentTypes, registerExternalAction } from '@intenda/opus-ui';
 
 //Components
+export * from './libraryComponents';
+
+//Components
 import { AudioPlayer } from './components/audioPlayer';
 import { AudioRecorder } from './components/audioRecorder';
 import { Button } from './components/button';
