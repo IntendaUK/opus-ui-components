@@ -78,6 +78,31 @@ async function fileExists (path) {
 
 const ReactCompilerConfig = { target: '19' };
 
+// Vite 8 / Rolldown emits __require("react") for bundled UMD/CJS deps (react-input-mask,
+// react-signature-canvas, prop-types, etc.) that call require('react'). React is externalized,
+// so in the browser there is no global `require` and that throws. This plugin injects a `require`
+// shim that resolves those calls to the ESM-imported (externalized) React/ReactDOM.
+const externalRequireShim = () => ({
+	name: 'external-require-shim',
+	renderChunk (code) {
+		if (!code.includes('__require'))
+			return null;
+
+		const shim = [
+			"import * as __extReact from 'react';",
+			"import * as __extReactDom from 'react-dom';",
+			'const require = (id) => {',
+			"	if (id === 'react') return __extReact.default || __extReact;",
+			"	if (id === 'react-dom') return __extReactDom.default || __extReactDom;",
+			"	throw new Error('[opus-ui-components] Unexpected require of external module: ' + id);",
+			'};',
+			''
+		].join('\n');
+
+		return { code: shim + code, map: null };
+	}
+});
+
 export default defineConfig(async () => {
 	let monorepoAliases = {};
 	let monorepoWatchPaths = [];
@@ -107,6 +132,7 @@ export default defineConfig(async () => {
 		plugins: [
 			customCopyPlugin(),
 			libCss(),
+			externalRequireShim(),
 			react({
 				babel: {
 					compact: true,
