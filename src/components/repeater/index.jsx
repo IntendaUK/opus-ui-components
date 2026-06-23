@@ -6,6 +6,7 @@ import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
 
 //Helpers
 import { generateWrapperMda } from './helpers';
+import { applyNodeTraits } from './traits';
 
 //Plugins
 import { List } from 'react-window';
@@ -13,8 +14,7 @@ import { List } from 'react-window';
 //Context
 const RepeaterContext = createContext('repeaterContext');
 
-//Helpers
-const buildVirtualizedChildData = ({ ChildWgt, state: { childMda } }) => {
+const buildVirtualizedChildData = ({ ChildWgt, state: { childMda, resolveDynamicTrait } }) => {
 	if (!childMda)
 		return;
 
@@ -22,11 +22,10 @@ const buildVirtualizedChildData = ({ ChildWgt, state: { childMda } }) => {
 		const key = c.relId || c.id;
 
 		if (typeof(c.type) === 'function') {
-			const { type: Type, ...rest } = c;
-
-			return (
-				<Type key={key } {...rest} />
-			);
+			return {
+				key,
+				el: renderOpusNode(c, key, resolveDynamicTrait)
+			};
 		}
 
 		return {
@@ -94,25 +93,25 @@ const isOpusNode = value => {
 	);
 };
 
-const transformValue = (value, key = undefined) => {
+const transformValue = (value, key = undefined, resolveDynamicTrait) => {
 	//If a repeater row also contains a repeater, don't mess with its rowMda
 	if (value == null || key === 'rowMda')
 		return value;
 
 	if (Array.isArray(value)) {
 		return value.map((item, i) => {
-			return transformValue(item, i);
+			return transformValue(item, i, resolveDynamicTrait);
 		});
 	}
 
 	if (isOpusNode(value))
-		return renderOpusNode(value, key);
+		return renderOpusNode(value, key, resolveDynamicTrait);
 
 	if (typeof value === 'object') {
 		const result = {};
 
 		Object.keys(value).forEach(propKey => {
-			result[propKey] = transformValue(value[propKey], propKey);
+			result[propKey] = transformValue(value[propKey], propKey, resolveDynamicTrait);
 		});
 
 		return result;
@@ -121,13 +120,14 @@ const transformValue = (value, key = undefined) => {
 	return value;
 };
 
-const renderOpusNode = (node, key = undefined) => {
+const renderOpusNode = (node, key = undefined, resolveDynamicTrait) => {
 	if (!node)
 		return null;
 
-	const { type: Type, wgts, ...rest } = node;
+	const finalNode = applyNodeTraits(node, resolveDynamicTrait);
+	const { type: Type, wgts, ...rest } = finalNode;
 
-	const transformedRest = transformValue(rest);
+	const transformedRest = transformValue(rest, undefined, resolveDynamicTrait);
 
 	let children = null;
 
@@ -135,7 +135,7 @@ const renderOpusNode = (node, key = undefined) => {
 		children = wgts.map((child, i) => {
 			const childKey = child.relId || child.id || i;
 
-			return renderOpusNode(child, childKey);
+			return renderOpusNode(child, childKey, resolveDynamicTrait);
 		});
 	}
 
@@ -155,7 +155,7 @@ const renderOpusNode = (node, key = undefined) => {
 //Components
 const RepeaterInner = () => {
 	const props = useContext(RepeaterContext);
-	const { ChildWgt, state: { x, childMda } } = props;
+	const { ChildWgt, state: { x, childMda, resolveDynamicTrait } } = props;
 
 	if (!childMda)
 		return null;
@@ -164,7 +164,7 @@ const RepeaterInner = () => {
 		const key = c.relId || c.id;
 
 		if (typeof(c.type) === 'function') {
-			const res = renderOpusNode(c, key);
+			const res = renderOpusNode(c, key, resolveDynamicTrait);
 
 			return res;
 		}

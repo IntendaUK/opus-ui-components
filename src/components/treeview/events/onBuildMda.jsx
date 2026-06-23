@@ -2,12 +2,50 @@
 
 //External Helpers
 import { generateWrapperMda } from '../../repeater/helpers';
+import { normalizeTrait, applyTraits } from '../../repeater/traits';
 
 //Events
 import onDropNode from './onDropNode';
 
 //Helpers
 import buildNodeId from '../helpers/buildNodeId';
+
+//Apply a node's traits directly as React: functional traits (transpiled trait modules imported
+// directly, or {trait} references) are called and their config merged into the node here, so the
+// node renders as a plain library component without the runtime resolving the trait paths from JSON
+// metadata. Any reference that cannot be normalised (e.g. a path string with no dynamic-trait
+// registry available) is left on the node for the runtime to resolve, preserving prior behaviour.
+const applyTreeNodeTraits = (mda, resolveDynamicTrait) => {
+	if (!Array.isArray(mda?.traits) || !mda.traits.length)
+		return mda;
+
+	const resolved = [];
+	const unresolved = [];
+
+	mda.traits.forEach(trait => {
+		const normalized = normalizeTrait(trait, resolveDynamicTrait);
+
+		if (normalized)
+			resolved.push(normalized);
+		else
+			unresolved.push(trait);
+	});
+
+	if (!resolved.length)
+		return mda;
+
+	const { id, scope, relId, prps, traits, ...otherRest } = mda;
+
+	const applied = {
+		...applyTraits({ sysPrps: { id, scope, relId }, prps, traits: resolved }),
+		...otherRest
+	};
+
+	if (unresolved.length)
+		applied.traits = unresolved;
+
+	return applied;
+};
 
 //Helpers
 const buildCanDragContents = (props, data, id, label) => {
@@ -105,7 +143,7 @@ const buildLabel = (props, data) => {
 const recurse = (props, data, level = 0, index = 0) => {
 	const { state: { childAtr, dtaAtr } } = props;
 	const { state: { levelLeftMarginSize, expandedNodes, noPad, canDragAndDrop } } = props;
-	const { state: { traitsTreeNode, prpsTreeNode } } = props;
+	const { state: { traitsTreeNode, prpsTreeNode, resolveDynamicTrait } } = props;
 
 	const id = buildNodeId(props, data);
 
@@ -147,7 +185,7 @@ const recurse = (props, data, level = 0, index = 0) => {
 		wgts: data[childAtr]?.map((c, i) => recurse(props, c, level + 1, i))
 	});
 
-	return mda;
+	return applyTreeNodeTraits(mda, resolveDynamicTrait);
 };
 
 //Event
