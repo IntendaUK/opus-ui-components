@@ -93,9 +93,35 @@ const isOpusNode = value => {
 	);
 };
 
+//Row-prop keys whose value is metadata that is NOT rendered here — leave it as metadata rather than
+// eagerly rendering nested { type: <component> } nodes into React elements. Eagerly rendering would
+// leave a live React element (with circular _owner -> Fiber -> DOM back-references) in the row's
+// props, which the prop pipeline (clone / buildMorphProps) then deep-walks -> "too much recursion".
+// Per-row ((rowData…)) tokens inside these are still injected: that happens in the earlier
+// replacePrpEntries/directReplace pass, not here.
+//  - rowMda: a nested repeater renders its own rows.
+//  - tooltipMda: the popover renders it lazily on hover.
+//  - fireScript / scps / flows: script & flow payloads. Any widget metadata inside (e.g. a setState's
+//    ^value.tabContents) is DATA, rendered later by its consumer (e.g. extraWgts -> wrapWidgets when
+//    the tab opens) — never at row-build time.
+//  - conditionalRootTypes: a descriptor list of { condition, type, traitPrps } produced by the
+//    transpiler from Opus conditional traits. renderConditionalRootType picks the entry whose
+//    condition matches and renders that `type`. Each entry has a function `type`, so without this
+//    exemption transformValue would render the descriptor itself into an element and strip `condition`
+//    (-> isConditionMet(undefined) -> "operator is undefined"). In the original JSON the equivalent was
+//    a `trait` path *string* that nothing rendered, so this restores that "don't render" property.
+const NON_RENDERED_MDA_KEYS = new Set([
+	'rowMda',
+	'tooltipMda',
+	'fireScript',
+	'scps',
+	'flows',
+	'conditionalRootTypes'
+]);
+
 const transformValue = (value, key = undefined, resolveDynamicTrait) => {
-	//If a repeater row also contains a repeater, don't mess with its rowMda
-	if (value == null || key === 'rowMda')
+	//Leave metadata that is rendered elsewhere/on demand untouched (see NON_RENDERED_MDA_KEYS).
+	if (value == null || NON_RENDERED_MDA_KEYS.has(key))
 		return value;
 
 	if (Array.isArray(value)) {
@@ -193,18 +219,28 @@ const VirtualizedInner = () => {
 	if (!childMda)
 		return null;
 
-	const style = {};
-	const heightPx = height ? +((height + '').replace('px', '')) : undefined;
+	const heightPx = +((height + '').replace('px', ''));
+	const widthPx = +((width + '').replace('px', ''));
+	const hasHeight = Number.isFinite(heightPx);
+	const hasWidth = Number.isFinite(widthPx);
 
-	if (width)
-		style.width = +((width + '').replace('px', ''));
-	if (heightPx)
-		style.height = heightPx;
+	//react-window v1's FixedSizeList took an explicit `height` *prop*; v2's List instead measures its
+	// own element (using `defaultHeight` only until measured). So the List must render into an element
+	// that actually has a size, or it measures 0 after first paint and drops every row. We give an
+	// OUTER element that element size — the consumer's px height/width when provided (the documented
+	// virtualization contract), else fill the parent — and have the List fill it. The outer also carries
+	// the repeater `id` (the v2 upgrade deleted the old id-bearing VirtualizedOuter), so the height /
+	// dataLoader id-lookups elsewhere resolve again.
+	const outerStyle = {
+		position: 'relative',
+		minHeight: 0,
+		height: hasHeight ? heightPx : '100%',
+		width: hasWidth ? widthPx : '100%'
+	};
 
 	const listPrps = {
-		id,
 		className: invisibleScrollbars ? 'invisibleScrollbars' : '',
-		style,
+		style: { height: '100%', width: '100%' },
 		rowComponent: VirtualizedRow,
 		rowCount: childMda.length,
 		rowHeight: virtualizedItemSize,
@@ -212,10 +248,15 @@ const VirtualizedInner = () => {
 		...prpsVirtualizedContainer
 	};
 
-	if (heightPx)
+	//SSR/initial height before the List measures its element — use the consumer px if given.
+	if (hasHeight)
 		listPrps.defaultHeight = heightPx;
 
-	return <List {...listPrps} />;
+	return (
+		<div id={id} style={outerStyle}>
+			<List {...listPrps} />
+		</div>
+	);
 };
 
 //Export
