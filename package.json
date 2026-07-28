@@ -1,8 +1,12 @@
 {
 	"name": "@intenda/opus-ui-components",
-	"version": "2.11.1",
+	"version": "2.11.2",
 	"type": "module",
 	"homepage": "https://opus-ui.com",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/IntendaUK/opus-ui-components"
+	},
 	"files": [
 		"dist",
 		"lspconfig.json"
