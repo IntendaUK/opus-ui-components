@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
   repository_dispatch:
     types: [ opus-ui-tagged ]
 jobs:
@@ -11,10 +11,17 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout dispatched release branch
+        if: github.event_name == 'repository_dispatch'
+        uses: actions/checkout@v6
         with:
-          node-version: lts/*
+          ref: ${{ github.event.client_payload.ref == 'refs/heads/opus-2' && 'opus-2' || 'main' }}
+      - name: Checkout current ref
+        if: github.event_name != 'repository_dispatch'
+        uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
