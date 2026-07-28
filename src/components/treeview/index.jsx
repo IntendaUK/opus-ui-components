@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 
 //System
-import { createContext, ThemedComponent, DataLoaderHelper } from '@intenda/opus-ui';
+import { createContext, renderWgts, DataLoaderHelper } from '@intenda/opus-ui';
 
 //Events
 import onBuildMda from './events/onBuildMda';
@@ -63,13 +63,11 @@ const TreeviewInner = () => {
 	if (typeof(mdaChildren.type) === 'function')
 		result = renderOpusNode(mdaChildren, mdaChildren.id);
 	else
-		result = <ChildWgt key={mdaChildren.id} mda={mdaChildren} />
+		//renderWgts adds tagged-component-trait handling on top of the ChildWgt fallback (passing the
+		// treeview's own parent-bound ChildWgt so non-trait nodes keep their parentId context).
+		result = renderWgts(mdaChildren, ChildWgt);
 
 	return result;
-
-	/*return (
-		<ThemedComponent mda={mdaChildren} />
-	);*/
 };
 
 export const Treeview = props => {

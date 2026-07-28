@@ -6,6 +6,7 @@ import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
 
 //Helpers
 import { generateWrapperMda } from './helpers';
+import { applyNodeTraits } from './traits';
 
 //Plugins
 import { List } from 'react-window';
@@ -13,8 +14,7 @@ import { List } from 'react-window';
 //Context
 const RepeaterContext = createContext('repeaterContext');
 
-//Helpers
-const buildVirtualizedChildData = ({ ChildWgt, state: { childMda } }) => {
+const buildVirtualizedChildData = ({ ChildWgt, state: { childMda, resolveDynamicTrait } }) => {
 	if (!childMda)
 		return;
 
@@ -22,11 +22,10 @@ const buildVirtualizedChildData = ({ ChildWgt, state: { childMda } }) => {
 		const key = c.relId || c.id;
 
 		if (typeof(c.type) === 'function') {
-			const { type: Type, ...rest } = c;
-
-			return (
-				<Type key={key } {...rest} />
-			);
+			return {
+				key,
+				el: renderOpusNode(c, key, resolveDynamicTrait)
+			};
 		}
 
 		return {
@@ -94,25 +93,51 @@ const isOpusNode = value => {
 	);
 };
 
-const transformValue = (value, key = undefined) => {
-	//If a repeater row also contains a repeater, don't mess with its rowMda
-	if (value == null || key === 'rowMda')
+//Row-prop keys whose value is metadata that is NOT rendered here — leave it as metadata rather than
+// eagerly rendering nested { type: <component> } nodes into React elements. Eagerly rendering would
+// leave a live React element (with circular _owner -> Fiber -> DOM back-references) in the row's
+// props, which the prop pipeline (clone / buildMorphProps) then deep-walks -> "too much recursion".
+// Per-row ((rowData…)) tokens inside these are still injected: that happens in the earlier
+// replacePrpEntries/directReplace pass, not here.
+//  - rowMda: a nested repeater renders its own rows.
+//  - tooltipMda: the popover renders it lazily on hover.
+//  - fireScript / scps / flows: script & flow payloads. Any widget metadata inside (e.g. a setState's
+//    ^value.tabContents) is DATA, rendered later by its consumer (e.g. extraWgts -> wrapWidgets when
+//    the tab opens) — never at row-build time.
+//  - conditionalRootTypes: a descriptor list of { condition, type, traitPrps } produced by the
+//    transpiler from Opus conditional traits. renderConditionalRootType picks the entry whose
+//    condition matches and renders that `type`. Each entry has a function `type`, so without this
+//    exemption transformValue would render the descriptor itself into an element and strip `condition`
+//    (-> isConditionMet(undefined) -> "operator is undefined"). In the original JSON the equivalent was
+//    a `trait` path *string* that nothing rendered, so this restores that "don't render" property.
+const NON_RENDERED_MDA_KEYS = new Set([
+	'rowMda',
+	'tooltipMda',
+	'fireScript',
+	'scps',
+	'flows',
+	'conditionalRootTypes'
+]);
+
+const transformValue = (value, key = undefined, resolveDynamicTrait) => {
+	//Leave metadata that is rendered elsewhere/on demand untouched (see NON_RENDERED_MDA_KEYS).
+	if (value == null || NON_RENDERED_MDA_KEYS.has(key))
 		return value;
 
 	if (Array.isArray(value)) {
 		return value.map((item, i) => {
-			return transformValue(item, i);
+			return transformValue(item, i, resolveDynamicTrait);
 		});
 	}
 
 	if (isOpusNode(value))
-		return renderOpusNode(value, key);
+		return renderOpusNode(value, key, resolveDynamicTrait);
 
 	if (typeof value === 'object') {
 		const result = {};
 
 		Object.keys(value).forEach(propKey => {
-			result[propKey] = transformValue(value[propKey], propKey);
+			result[propKey] = transformValue(value[propKey], propKey, resolveDynamicTrait);
 		});
 
 		return result;
@@ -121,13 +146,14 @@ const transformValue = (value, key = undefined) => {
 	return value;
 };
 
-const renderOpusNode = (node, key = undefined) => {
+const renderOpusNode = (node, key = undefined, resolveDynamicTrait) => {
 	if (!node)
 		return null;
 
-	const { type: Type, wgts, ...rest } = node;
+	const finalNode = applyNodeTraits(node, resolveDynamicTrait);
+	const { type: Type, wgts, ...rest } = finalNode;
 
-	const transformedRest = transformValue(rest);
+	const transformedRest = transformValue(rest, undefined, resolveDynamicTrait);
 
 	let children = null;
 
@@ -135,7 +161,7 @@ const renderOpusNode = (node, key = undefined) => {
 		children = wgts.map((child, i) => {
 			const childKey = child.relId || child.id || i;
 
-			return renderOpusNode(child, childKey);
+			return renderOpusNode(child, childKey, resolveDynamicTrait);
 		});
 	}
 
@@ -155,7 +181,7 @@ const renderOpusNode = (node, key = undefined) => {
 //Components
 const RepeaterInner = () => {
 	const props = useContext(RepeaterContext);
-	const { ChildWgt, state: { x, childMda } } = props;
+	const { ChildWgt, state: { x, childMda, resolveDynamicTrait } } = props;
 
 	if (!childMda)
 		return null;
@@ -164,7 +190,7 @@ const RepeaterInner = () => {
 		const key = c.relId || c.id;
 
 		if (typeof(c.type) === 'function') {
-			const res = renderOpusNode(c, key);
+			const res = renderOpusNode(c, key, resolveDynamicTrait);
 
 			return res;
 		}
@@ -193,18 +219,28 @@ const VirtualizedInner = () => {
 	if (!childMda)
 		return null;
 
-	const style = {};
-	const heightPx = height ? +((height + '').replace('px', '')) : undefined;
+	const heightPx = +((height + '').replace('px', ''));
+	const widthPx = +((width + '').replace('px', ''));
+	const hasHeight = Number.isFinite(heightPx);
+	const hasWidth = Number.isFinite(widthPx);
 
-	if (width)
-		style.width = +((width + '').replace('px', ''));
-	if (heightPx)
-		style.height = heightPx;
+	//react-window v1's FixedSizeList took an explicit `height` *prop*; v2's List instead measures its
+	// own element (using `defaultHeight` only until measured). So the List must render into an element
+	// that actually has a size, or it measures 0 after first paint and drops every row. We give an
+	// OUTER element that element size — the consumer's px height/width when provided (the documented
+	// virtualization contract), else fill the parent — and have the List fill it. The outer also carries
+	// the repeater `id` (the v2 upgrade deleted the old id-bearing VirtualizedOuter), so the height /
+	// dataLoader id-lookups elsewhere resolve again.
+	const outerStyle = {
+		position: 'relative',
+		minHeight: 0,
+		height: hasHeight ? heightPx : '100%',
+		width: hasWidth ? widthPx : '100%'
+	};
 
 	const listPrps = {
-		id,
 		className: invisibleScrollbars ? 'invisibleScrollbars' : '',
-		style,
+		style: { height: '100%', width: '100%' },
 		rowComponent: VirtualizedRow,
 		rowCount: childMda.length,
 		rowHeight: virtualizedItemSize,
@@ -212,10 +248,15 @@ const VirtualizedInner = () => {
 		...prpsVirtualizedContainer
 	};
 
-	if (heightPx)
+	//SSR/initial height before the List measures its element — use the consumer px if given.
+	if (hasHeight)
 		listPrps.defaultHeight = heightPx;
 
-	return <List {...listPrps} />;
+	return (
+		<div id={id} style={outerStyle}>
+			<List {...listPrps} />
+		</div>
+	);
 };
 
 //Export
