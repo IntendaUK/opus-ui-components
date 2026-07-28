@@ -45,10 +45,21 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Publish to npm
+      - name: Publish to npm if version is new
         run: |
-          echo "Publishing version $VERSION to npm..."
-          npm publish
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_SPEC="${PACKAGE_NAME}@${VERSION}"
+
+          if npm view "$PACKAGE_SPEC" version --json >/dev/null 2>&1; then
+            echo "$PACKAGE_SPEC is already published. Skipping npm publish."
+          elif npm publish; then
+            echo "Published $PACKAGE_SPEC."
+          elif npm view "$PACKAGE_SPEC" version --json >/dev/null 2>&1; then
+            echo "$PACKAGE_SPEC was published by another workflow. Continuing."
+          else
+            echo "Failed to publish $PACKAGE_SPEC."
+            exit 1
+          fi
 
       - name: Create and push tag if not exists
         env:
