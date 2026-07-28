@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install latest Opus UI for tests
+        run: npm update @intenda/opus-ui --no-save --package-lock=false
+
       - name: Install Playwright
         run: npx playwright install chromium
 
