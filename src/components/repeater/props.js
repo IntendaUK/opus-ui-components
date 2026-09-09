@@ -38,6 +38,11 @@ const props = {
 		type: 'integer',
 		desc: 'Defines the height or width of virtualized items (depending on virtualizedDirection). If this is not known and set, virtualization can not be used'
 	},
+	virtualizedFitVisibleHeight: {
+		type: 'boolean',
+		desc: 'Limits a horizontal virtualized repeater to the height remaining in its visible ancestor containers',
+		dft: false
+	},
 	prpsVirtualizedContainer: {
 		type: 'object',
 		desc: 'Defines properties to be applied to the virtualized container, when present',
