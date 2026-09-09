@@ -1,5 +1,5 @@
 //React
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 //System
 import { createContext, DataLoaderHelper } from '@intenda/opus-ui';
@@ -9,7 +9,7 @@ import { generateWrapperMda } from './helpers';
 import { applyNodeTraits } from './traits';
 
 //Plugins
-import { List } from 'react-window';
+import { Grid, List, useGridCallbackRef } from 'react-window';
 
 //Context
 const RepeaterContext = createContext('repeaterContext');
@@ -204,25 +204,172 @@ const RepeaterInner = () => {
 };
 
 // react-window v2 row component: receives { index, style, ...rowProps }.
-const VirtualizedRow = ({ index, style, data }) => (
-	<div style={style} id={data[index].key + 'outer'}>
+const VirtualizedRow = ({ ariaAttributes, index, style, data }) => (
+	<div {...ariaAttributes} style={style} id={data[index].key + 'outer'}>
 		{data[index].el}
 	</div>
 );
 
+const VirtualizedCell = ({ ariaAttributes, columnIndex, data, style }) => (
+	<div {...ariaAttributes} id={`${data[columnIndex].key}outer`} style={style}>
+		{data[columnIndex].el}
+	</div>
+);
+
+const parsePixelSize = value => {
+	const parsed = Number(String(value).replace('px', ''));
+
+	return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+const useMeasuredGridWidth = ({ enabled, gridApi, width }) => {
+	const [measuredWidth, setMeasuredWidth] = useState();
+
+	useLayoutEffect(() => {
+		if (!enabled)
+			return undefined;
+
+		const element = gridApi?.element;
+
+		if (!element)
+			return undefined;
+
+		const updateWidth = () => {
+			const nextWidth = element.clientWidth;
+
+			if (nextWidth > 0)
+				setMeasuredWidth(currentWidth => currentWidth === nextWidth ? currentWidth : nextWidth);
+		};
+		const observer = new ResizeObserver(updateWidth);
+
+		updateWidth();
+		observer.observe(element);
+
+		return () => observer.disconnect();
+	}, [enabled, gridApi]);
+
+	return measuredWidth ?? width;
+};
+
+const useMeasuredGridHeight = ({ enabled, gridApi, height }) => {
+	const [measuredHeight, setMeasuredHeight] = useState();
+
+	useLayoutEffect(() => {
+		if (!enabled)
+			return undefined;
+
+		const element = gridApi?.element;
+
+		if (!element)
+			return undefined;
+
+		const updateHeight = () => {
+			const elementRect = element.getBoundingClientRect();
+			let visibleBottom = window.innerHeight;
+			let ancestor = element.parentElement;
+
+			while (ancestor) {
+				const ancestorRect = ancestor.getBoundingClientRect();
+
+				if (ancestorRect.height > 0)
+					visibleBottom = Math.min(visibleBottom, ancestorRect.bottom);
+
+				ancestor = ancestor.parentElement;
+			}
+
+			const availableHeight = Math.floor(visibleBottom - elementRect.top);
+			const nextHeight = Math.min(height ?? availableHeight, availableHeight);
+
+			if (nextHeight > 0)
+				setMeasuredHeight(currentHeight => currentHeight === nextHeight ? currentHeight : nextHeight);
+		};
+		const observer = new ResizeObserver(updateHeight);
+		let ancestor = element.parentElement;
+
+		while (ancestor) {
+			observer.observe(ancestor);
+			ancestor = ancestor.parentElement;
+		}
+
+		window.addEventListener('resize', updateHeight);
+		updateHeight();
+
+		return () => {
+			observer.disconnect();
+			window.removeEventListener('resize', updateHeight);
+		};
+	}, [enabled, gridApi, height]);
+
+	return measuredHeight ?? height;
+};
+
 const VirtualizedInner = () => {
 	const { id, getHandler, state } = useContext(RepeaterContext);
-	const { childMda, width, height, invisibleScrollbars, virtualizedItemSize, prpsVirtualizedContainer } = state;
+	const {
+		childMda,
+		height,
+		invisibleScrollbars,
+		prpsVirtualizedContainer,
+		virtualizedDirection,
+		virtualizedFitVisibleHeight,
+		virtualizedItemSize,
+		width
+	} = state;
 
 	const itemData = useMemo(getHandler(buildVirtualizedChildData), [childMda]);
+	const [gridApi, gridRef] = useGridCallbackRef(null);
+	const heightPx = parsePixelSize(height);
+	const widthPx = parsePixelSize(width);
+	const measuredWidth = useMeasuredGridWidth({
+		enabled: virtualizedDirection === 'horizontal',
+		gridApi,
+		width: widthPx
+	});
+	const measuredHeight = useMeasuredGridHeight({
+		enabled: virtualizedDirection === 'horizontal' && virtualizedFitVisibleHeight,
+		gridApi,
+		height: heightPx
+	});
 
 	if (!childMda)
 		return null;
 
-	const heightPx = +((height + '').replace('px', ''));
-	const widthPx = +((width + '').replace('px', ''));
-	const hasHeight = Number.isFinite(heightPx);
-	const hasWidth = Number.isFinite(widthPx);
+	if (virtualizedDirection === 'horizontal') {
+		const {
+			style: suppliedStyle,
+			...suppliedContainerProps
+		} = prpsVirtualizedContainer ?? {};
+		const className = [
+			suppliedContainerProps.className,
+			invisibleScrollbars ? 'invisibleScrollbars' : ''
+		].filter(Boolean).join(' ');
+
+		return (
+			<Grid
+				{...suppliedContainerProps}
+				cellComponent={VirtualizedCell}
+				cellProps={{ data: itemData }}
+				className={className}
+				columnCount={childMda.length}
+				columnWidth={virtualizedItemSize}
+				defaultHeight={measuredHeight}
+				defaultWidth={measuredWidth}
+				gridRef={gridRef}
+				id={id}
+				rowCount={1}
+				rowHeight={measuredHeight ?? '100%'}
+				style={{
+					height: measuredHeight ?? '100%',
+					minHeight: 0,
+					width: measuredWidth ?? '100%',
+					...suppliedStyle
+				}}
+			/>
+		);
+	}
+
+	const hasHeight = heightPx !== undefined;
+	const hasWidth = widthPx !== undefined;
 
 	//react-window v1's FixedSizeList took an explicit `height` *prop*; v2's List instead measures its
 	// own element (using `defaultHeight` only until measured). So the List must render into an element

@@ -3,8 +3,12 @@
 import { test } from '@playwright/test';
 
 //Helpers
-import '../helpers/setup';
-import { testSteps } from '../helpers/awaitLocatorActions';
+import { init, testSteps } from '../helpers/awaitLocatorActions';
+
+test.beforeEach(async ({ page }) => {
+	await page.goto('http://localhost:3000/test.html');
+	init({ page });
+});
 
 test('Treeview: Simple', async () => {
 	await testSteps([

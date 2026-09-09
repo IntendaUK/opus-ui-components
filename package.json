@@ -1,6 +1,6 @@
 {
 	"name": "@intenda/opus-ui-components",
-	"version": "3.2.3",
+	"version": "3.2.4",
 	"type": "module",
 	"homepage": "https://opus-ui.com",
 	"repository": {
@@ -35,7 +35,7 @@
 		"material-icons": "^1.13.14",
 		"react-markdown": "^10.1.0",
 		"react-number-format": "^5.4.3",
-		"react-window": "^2.2.7",
+		"react-window": "2.3.0",
 		"socket.io-client": "^4.8.1"
 	},
 	"devDependencies": {
