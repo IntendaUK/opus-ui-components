@@ -36,7 +36,7 @@ export default defineConfig({
 	outputDir: './tests/results',
 	//reporter: './tests/helpers/reporter.cjs',
 	reporter: 'list',
-	use: { trace: 'on-first-retry' },
+	use: { baseURL: 'http://localhost:3000', trace: 'on-first-retry' },
 	reportSlowTests: null,
 
 	projects,
