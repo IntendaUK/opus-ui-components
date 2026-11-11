@@ -33,7 +33,7 @@ export const onGetMessage = ({ getHandler, setState, state }) => {
 	if (!messageArray.length)
 		return;
 
-	const newState = { deleteKeys: ['newMsg'] };
+	const newState = { deleteKeys: [{ key: 'newMsg', value: messageArray }] };
 
 	messageArray.forEach(m => {
 		const { msg, autoClose = true, duration: durationOverride, isGlobal = false } = m;

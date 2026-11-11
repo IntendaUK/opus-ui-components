@@ -20,10 +20,10 @@ const props = {
 
 			return [...oldValue, ...newValue];
 		},
-		deleteAction: (oldValue = []) => {
-			oldValue.length = 0;
+		deleteAction: (oldValue = [], deletedValue = oldValue) => {
+			const consumed = new Set(Array.isArray(deletedValue) ? deletedValue : [deletedValue]);
 
-			return oldValue;
+			return oldValue.filter(message => !consumed.has(message));
 		},
 		dft: () => []
 	},
