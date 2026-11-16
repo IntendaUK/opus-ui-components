@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
 
-import '../helpers/setup';
+import { openTestPage } from '../helpers/setup';
 
 test.beforeEach(async ({ page }) => {
+	await openTestPage({ page });
 	await page.locator('#inputViewportValue input').fill('repeater');
 });
 
