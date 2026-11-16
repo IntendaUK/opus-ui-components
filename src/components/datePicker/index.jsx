@@ -20,6 +20,23 @@ import './styles.css';
 //Context
 const DatePickerContext = createContext('datePicker');
 
+//Floating
+const referenceDisplayed = {
+	name: 'referenceDisplayed',
+	fn: ({ elements: { reference } }) => ({
+		data: { hidden: reference.getClientRects().length === 0 }
+	})
+};
+
+const floatingMiddleware = [referenceDisplayed];
+
+const whileElementsMounted = (reference, floating, update) => {
+	const observer = new IntersectionObserver(() => update());
+	observer.observe(reference);
+
+	return () => observer.disconnect();
+};
+
 //Components
 const MonthDropdown = () => {
 	const { state: { selectedMonthName, selectedYear } } = useContext(DatePickerContext);
@@ -94,16 +111,17 @@ const Calendar = () => {
 const Popup = ({ parentRef }) => {
 	const { stylePopup, state: { active, popoverZIndex } } = useContext(DatePickerContext);
 
-	const { refs, floatingStyles } = useFloating({
+	const { refs, floatingStyles, middlewareData } = useFloating({
 		elements: {
 			reference: parentRef,
 		},
-		placement: 'bottom'
+		placement: 'bottom',
+		middleware: floatingMiddleware,
+		whileElementsMounted
 	});
 
 	if (!active)
 		return null;
-
 
 	const container = document.getElementById('POPOVERS');
 
@@ -112,6 +130,9 @@ const Popup = ({ parentRef }) => {
 		...stylePopup,
 		zIndex: popoverZIndex
 	};
+
+	if (middlewareData.referenceDisplayed?.hidden)
+		styles.visibility = 'hidden';
 
 	const el = (
 		<div

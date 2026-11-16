@@ -22,6 +22,59 @@
 				"popoverZIndex": 2,
 				"valueOverride": "1985/12/26"
 			}
+		},
+		{
+			"id": "hideDatePickerHost",
+			"type": "button",
+			"prps": {
+				"cpt": "hide date picker host",
+				"fireScript": {
+					"actions": [
+						{
+							"type": "setState",
+							"target": "hostedDatePickerContainer",
+							"key": "vis",
+							"value": false
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": "showDatePickerHost",
+			"type": "button",
+			"prps": {
+				"cpt": "show date picker host",
+				"fireScript": {
+					"actions": [
+						{
+							"type": "setState",
+							"target": "hostedDatePickerContainer",
+							"key": "vis",
+							"value": true
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": "hostedDatePickerContainer",
+			"type": "containerSimple",
+			"prps": {
+				"renderChildrenWhenInvis": true
+			},
+			"wgts": [
+				{
+					"id": "hostedDatePicker",
+					"type": "datePicker",
+					"prps": {
+						"popoverZIndex": 2,
+						"valueOverride": "1985/12/26",
+						"width": "0px",
+						"height": "0px"
+					}
+				}
+			]
 		}
 	]
 }
