@@ -3,8 +3,10 @@
 import { test, expect } from '@playwright/test';
 
 //Helpers
-import '../helpers/setup';
+import { openTestPage } from '../helpers/setup';
 import { testSteps } from '../helpers/awaitLocatorActions';
+
+test.beforeEach(openTestPage);
 
 test('Date Picker', async () => {
 	await testSteps([

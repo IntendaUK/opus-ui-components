@@ -220,6 +220,8 @@ export const chooseDatePickerDate = async ({ locator, options: [chooseDate] }) =
 			await datePickerPopup.locator('.monthNavigation .button:first-child').click();
 		}
 
+		await expect(monthDropdown).not.toHaveText(currentMonthYear);
+
 		// Recheck the month and year after navigation
 		currentMonthYear = await monthDropdown.innerText();
 		[currentMonthName, currentYear] = currentMonthYear.split(', ');
