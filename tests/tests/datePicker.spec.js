@@ -18,19 +18,43 @@ test('Date Picker', async () => {
 });
 
 test('Date Picker popup is hidden while its anchor is not displayed', async ({ page }) => {
-	await testSteps([
-		'type , datePicker , #inputViewportValue',
-		'type , hostedDatePicker , #stateSetter-target',
-		'type , active , #stateSetter-key',
-		'type , true , #stateSetter-value',
-		'click , #stateSetter-button'
-	]);
+	await testSteps(['type , datePicker , #inputViewportValue']);
+
+	const anchor = page.locator('#hostedDatePicker');
+	await anchor.waitFor({ state: 'attached' });
 
 	const popup = page.locator('.cpnDatePicker-popup');
-	const anchorHasBox = () => page.locator('#hostedDatePicker').evaluate(el => el.getClientRects().length > 0);
+	const toggle = () => anchor.evaluate(el => el.click());
+	const anchorHasBox = () => anchor.evaluate(el => el.getClientRects().length > 0);
 	const settleFrames = () => page.evaluate(() => new Promise(res =>
 		requestAnimationFrame(() => requestAnimationFrame(res))
 	));
+	const popupOffsetFromAnchor = () => page.evaluate(() => {
+		const a = document.getElementById('hostedDatePicker').getBoundingClientRect();
+		const p = document.querySelector('.cpnDatePicker-popup').getBoundingClientRect();
+
+		return {
+			x: Math.round(p.left + (p.width / 2) - (a.left + (a.width / 2))),
+			y: Math.round(p.top - a.bottom)
+		};
+	});
+
+	await test.step('first open and reopen place the popup under the anchor', async () => {
+		await toggle();
+		await expect(popup).toBeVisible();
+		await expect.poll(popupOffsetFromAnchor).toEqual({ x: 0, y: 0 });
+
+		await toggle();
+		await expect(popup).toHaveCount(0);
+
+		await anchor.evaluate(el => {
+			Object.assign(el.style, { position: 'fixed', top: '120px', left: '420px' });
+		});
+
+		await toggle();
+		await expect(popup).toBeVisible();
+		await expect.poll(popupOffsetFromAnchor).toEqual({ x: 0, y: 0 });
+	});
 
 	await test.step('anchor in the viewport', async () => {
 		await expect(popup).toBeVisible();

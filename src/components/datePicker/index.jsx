@@ -47,6 +47,7 @@ const whileElementsMounted = (reference, floating, update) => {
 		frame = requestAnimationFrame(check);
 	};
 
+	update();
 	frame = requestAnimationFrame(check);
 
 	return () => cancelAnimationFrame(frame);
