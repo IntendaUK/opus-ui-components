@@ -27,15 +27,41 @@ test('Date Picker popup is hidden while its anchor is not displayed', async ({ p
 	]);
 
 	const popup = page.locator('.cpnDatePicker-popup');
-	await expect(popup).toBeVisible();
+	const anchorHasBox = () => page.locator('#hostedDatePicker').evaluate(el => el.getClientRects().length > 0);
+	const settleFrames = () => page.evaluate(() => new Promise(res =>
+		requestAnimationFrame(() => requestAnimationFrame(res))
+	));
 
-	await testSteps(['click , #hideDatePickerHost']);
+	await test.step('anchor in the viewport', async () => {
+		await expect(popup).toBeVisible();
 
-	await expect(page.locator('#hostedDatePickerContainer')).toBeHidden();
-	await expect(popup).toHaveCount(1);
-	await expect(popup).toBeHidden();
+		await testSteps(['click , #hideDatePickerHost']);
 
-	await testSteps(['click , #showDatePickerHost']);
+		await expect(page.locator('#hostedDatePickerContainer')).toBeHidden();
+		await expect(popup).toHaveCount(1);
+		await expect(popup).toBeHidden();
 
-	await expect(popup).toBeVisible();
+		await testSteps(['click , #showDatePickerHost']);
+
+		await expect(popup).toBeVisible();
+	});
+
+	await test.step('anchor already above the viewport', async () => {
+		await page.locator('#hostedDatePicker').evaluate(el => {
+			Object.assign(el.style, { position: 'fixed', top: '-10px', left: '200px' });
+		});
+		await settleFrames();
+		await expect(popup).toBeVisible();
+
+		await testSteps(['click , #hideDatePickerHost']);
+
+		await expect.poll(anchorHasBox).toBe(false);
+		await expect(popup).toHaveCount(1);
+		await expect(popup).toBeHidden();
+
+		await testSteps(['click , #showDatePickerHost']);
+
+		await expect.poll(anchorHasBox).toBe(true);
+		await expect(popup).toBeVisible();
+	});
 });

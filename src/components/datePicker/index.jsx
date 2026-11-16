@@ -21,20 +21,35 @@ import './styles.css';
 const DatePickerContext = createContext('datePicker');
 
 //Floating
+const isDisplayed = element => element.getClientRects().length > 0;
+
 const referenceDisplayed = {
 	name: 'referenceDisplayed',
 	fn: ({ elements: { reference } }) => ({
-		data: { hidden: reference.getClientRects().length === 0 }
+		data: { hidden: !isDisplayed(reference) }
 	})
 };
 
 const floatingMiddleware = [referenceDisplayed];
 
 const whileElementsMounted = (reference, floating, update) => {
-	const observer = new IntersectionObserver(() => update());
-	observer.observe(reference);
+	let displayed = isDisplayed(reference);
+	let frame;
 
-	return () => observer.disconnect();
+	const check = () => {
+		const nowDisplayed = isDisplayed(reference);
+
+		if (nowDisplayed !== displayed) {
+			displayed = nowDisplayed;
+			update();
+		}
+
+		frame = requestAnimationFrame(check);
+	};
+
+	frame = requestAnimationFrame(check);
+
+	return () => cancelAnimationFrame(frame);
 };
 
 //Components
